@@ -57,38 +57,45 @@ $user_name = "Аня Куликова"; // укажите здесь ваше и
 
  <!-- Создаем  массивы   -->
  
-    <?php $categories = ["Доски и лыжи", "Крепления", "Ботинки", "Одежда", "Инструменты", "Разное"]; 
+    <?php 
+	$categories = ["Доски и лыжи", "Крепления", "Ботинки", "Одежда", "Инструменты", "Разное"]; 
 		  
  		$goods = [ 
-		['Название' => '2014 Rossignol District Snowboard',
-		'Категория' => $categories[0],
-		'Цена' => 10999,
-		'URL картинки' => 'img/lot-1.jpg'
+		[
+		'name' => '2014 Rossignol District Snowboard',
+		'categories' => $categories[0],
+		'price' => 10999,
+		'URL' => 'img/lot-1.jpg'
 		],
- 		['Название' => 'DC Ply Mens 2016/2017 Snowboard',
-		'Категория' => $categories[0],
-		'Цена' => 159999,
-		'URL картинки' => 'img/lot-2.jpg'
+ 		[
+		'name' => 'DC Ply Mens 2016/2017 Snowboard',
+		'categories' => $categories[0],
+		'price' => 159999,
+		'URL' => 'img/lot-2.jpg'
 		],
-		['Название' => 'Крепления Union Contact Pro 2015 года размер L/XL',
-		'Категория' => $categories[1],
-		'Цена' => 8000,
-		'URL картинки' => 'img/lot-3.jpg'
+		[
+		'name' => 'Крепления Union Contact Pro 2015 года размер L/XL',
+		'categories' => $categories[1],
+		'price' => 8000,
+		'URL' => 'img/lot-3.jpg'
 		],
-		['Название' => 'Ботинки для сноуборда DC Mutiny Charocal',
-		'Категория' => $categories[2],
-		'Цена' => 10999,
-		'URL картинки' => 'img/lot-4.jpg'
+		[
+		'name' => 'Ботинки для сноуборда DC Mutiny Charocal',
+		'categories' => $categories[2],
+		'price' => 10999,
+		'URL' => 'img/lot-4.jpg'
 		],
-		['Название' => 'Куртка для сноуборда DC Mutiny Charocal',
-		'Категория' => $categories[3],
-		'Цена' => 7500,
-		'URL картинки' => 'img/lot-5.jpg'
+		[
+		'name' => 'Куртка для сноуборда DC Mutiny Charocal',
+		'categories' => $categories[3],
+		'price' => 7500,
+		'URL' => 'img/lot-5.jpg'
 		],
-		['Название' => 'Маска Oakley Canopy',
-		'Категория' => $categories[5],
-		'Цена' => 5400,
-		'URL картинки' => 'img/lot-6.jpg'
+		[
+		'name' => 'Маска Oakley Canopy',
+		'categories' => $categories[5],
+		'price' => 5400,
+		'URL' => 'img/lot-6.jpg'
 		] 
 		];
   		
@@ -120,15 +127,15 @@ $user_name = "Аня Куликова"; // укажите здесь ваше и
 			<?php	foreach ($goods as $key => $val): ?>
             <li class="lots__item lot">
                 <div class="lot__image">
-                    <img src="<?=$val['URL картинки']?>" width="350" height="260" alt="">
+                    <img src="<?=$val['URL']?>" width="350" height="260" alt="">
                 </div>
                 <div class="lot__info">
-                    <span class="lot__category"><?=$val['Категория']?></span>
-                    <h3 class="lot__title"><a class="text-link" href="pages/lot.html"><?=$val['Название']?></a></h3>
+                    <span class="lot__category"><?=$val['categories']?></span>
+                    <h3 class="lot__title"><a class="text-link" href="pages/lot.html"><?=$val['name']?></a></h3>
                     <div class="lot__state">
                         <div class="lot__rate">
                             <span class="lot__amount">Стартовая цена</span>
-                            <span class="lot__cost"><?=$val['Цена']?><b class="rub">р</b></span>
+                            <span class="lot__cost"><?=$val['price']?><b class="rub">р</b></span>
                         </div>
                         <div class="lot__timer timer">
                             12:23
