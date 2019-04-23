@@ -102,10 +102,8 @@ $user_name = "Аня Куликова"; // укажите здесь ваше и
     ?>
 	<!-- Добавляем функцию форматирования цены-->
 	
-    <?php function format_price($var) {
-              $var = ceil($var);
-              $str = number_format($var, 0, ' ', ' '); 
-		      return $str ." ₽";
+    <?php function format_price($var) {               
+		      return number_format(ceil($var), 0, ' ', ' ') ." ₽"; 
 	       }
 	?>
     <section class="promo">
