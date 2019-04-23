@@ -94,7 +94,7 @@ $user_name = "Аня Куликова"; // укажите здесь ваше и
 		    [
 		       'name' => 'Маска Oakley Canopy',
 		       'category' => $categories[5],
-		       'price' => 400,
+		       'price' => 397.5,
 		       'url' => 'img/lot-6.jpg'
 		    ] 
 		];
@@ -105,7 +105,7 @@ $user_name = "Аня Куликова"; // укажите здесь ваше и
     <?php function format_price($var) {
               $var = ceil($var);
               $str = number_format($var, 0, ' ', ' '); 
-		      return $str;
+		      return $str ." ₽";
 	       }
 	?>
     <section class="promo">
@@ -142,7 +142,7 @@ $user_name = "Аня Куликова"; // укажите здесь ваше и
                     <div class="lot__state">
                         <div class="lot__rate">
                             <span class="lot__amount">Стартовая цена</span>
-                            <span class="lot__cost"><?=format_price($val['price'] ) ." ₽"?>  </span>
+                            <span class="lot__cost"><?=format_price($val['price'] ) ?>  </span>
                         </div>
                         <div class="lot__timer timer">
                             12:23
