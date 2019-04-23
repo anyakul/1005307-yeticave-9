@@ -63,44 +63,50 @@ $user_name = "Аня Куликова"; // укажите здесь ваше и
  		$goods = [ 
 		   [
 		       'name' => '2014 Rossignol District Snowboard',
-		       'categories' => $categories[0],
+		       'category' => $categories[0],
 		       'price' => 10999,
-		       'URL' => 'img/lot-1.jpg'
+		       'url' => 'img/lot-1.jpg'
 		    ],
  		    [
 		       'name' => 'DC Ply Mens 2016/2017 Snowboard',
-		       'categories' => $categories[0],
+		       'category' => $categories[0],
 		       'price' => 159999,
-		       'URL' => 'img/lot-2.jpg'
+		       'url' => 'img/lot-2.jpg'
 		    ],
 		    [
 		       'name' => 'Крепления Union Contact Pro 2015 года размер L/XL',
-		       'categories' => $categories[1],
+		       'category' => $categories[1],
 		       'price' => 8000,
-		       'URL' => 'img/lot-3.jpg'
+		       'url' => 'img/lot-3.jpg'
 		    ],
 		    [
 		       'name' => 'Ботинки для сноуборда DC Mutiny Charocal',
-		       'categories' => $categories[2],
+		       'category' => $categories[2],
 		       'price' => 10999,
-		       'URL' => 'img/lot-4.jpg'
+		       'url' => 'img/lot-4.jpg'
 		    ],
 		    [
 		       'name' => 'Куртка для сноуборда DC Mutiny Charocal',
-		       'categories' => $categories[3],
+		       'category' => $categories[3],
 		       'price' => 7500,
-		       'URL' => 'img/lot-5.jpg'
+		       'url' => 'img/lot-5.jpg'
 		    ],
 		    [
 		       'name' => 'Маска Oakley Canopy',
-		       'categories' => $categories[5],
-		       'price' => 5400,
-		       'URL' => 'img/lot-6.jpg'
+		       'category' => $categories[5],
+		       'price' => 397.5,
+		       'url' => 'img/lot-6.jpg'
 		    ] 
 		];
   		
     ?>
-		 
+
+	<!-- Добавляем функцию форматирования цены-->
+	
+    <?php function format_price($var) {               
+		      return number_format(ceil($var), 0, ' ', ' ') ." ₽"; 
+	       }
+	?>
     <section class="promo">
         <h2 class="promo__title">Нужен стафф для катки?</h2>
         <p class="promo__text">На нашем интернет-аукционе ты найдёшь самое эксклюзивное сноубордическое и горнолыжное снаряжение.</p>
@@ -126,16 +132,16 @@ $user_name = "Аня Куликова"; // укажите здесь ваше и
 			
 			<?php	foreach ($goods as $key => $val): ?>
             <li class="lots__item lot">
-                <div class="lot__image">
-                    <img src="<?=$val['URL']?>" width="350" height="260" alt="">
+                <div class="lot__image">            
+                    <img src="<?=$val['url']?>" width="350" height="260" alt="">
                 </div>
                 <div class="lot__info">
-                    <span class="lot__category"><?=$val['categories']?></span>
+                    <span class="lot__category"><?=$val['category']?></span>
                     <h3 class="lot__title"><a class="text-link" href="pages/lot.html"><?=$val['name']?></a></h3>
                     <div class="lot__state">
                         <div class="lot__rate">
                             <span class="lot__amount">Стартовая цена</span>
-                            <span class="lot__cost"><?=$val['price']?><b class="rub">р</b></span>
+                             <span class="lot__cost"><?=format_price($val['price'] ) ?>  </span>
                         </div>
                         <div class="lot__timer timer">
                             12:23
