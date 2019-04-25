@@ -52,7 +52,17 @@ $user_name = "Аня Куликова"; // укажите здесь ваше и
      function format_price($var) {               
 		      return number_format(ceil($var), 0, ' ', ' ') ;
 	     }
-
+	// функция определения времени жизни лота до полуночи
+		function time_lot() {
+		    $time_to_midnight = ["finish_time"=> "", "priznak_finish" => false];
+		    $ts_midnight = strtotime('tomorrow');
+            $secs_to_midnight = $ts_midnight - time();
+            $hours = floor($secs_to_midnight / 3600);
+            $minutes = floor(($secs_to_midnight % 3600) / 60); 
+		    $time_to_midnight["finish_time"] = (string)$hours .":" .(string)$minutes;
+		    if ($hours <1) : $time_to_midnight["priznak_finish"]= true; endif; 
+		    return $time_to_midnight ;		 
+	    }
 	// добавляем функции из helper  
 
      require('helpers.php');     
