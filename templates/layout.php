@@ -3,7 +3,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title><? =$title ?></title>
+    <title><?=$title?></title>
     <link href="../css/normalize.min.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
 </head>
@@ -35,7 +35,7 @@
 		     <a class="user-menu__bets" href="pages/my-bets.html">Мои ставки</a>
 		     <a class="user-menu__logout" href="#">Выход</a>
 		   </div> 
-        <?php else ($is_auth==0) : ?>		    
+        <?php else : ?>		    
 			<ul class="user-menu__list">
 		      <li class="user-menu__item">
 		        <a href="#">Регистрация</a>
