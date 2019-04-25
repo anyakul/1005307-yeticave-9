@@ -33,10 +33,9 @@
                         <div class="lot__rate">
                             <span class="lot__amount">Стартовая цена</span>
                             <span class="lot__cost"><?=format_price(htmlspecialchars($val['price'] ))?><b class="rub">₽</b>  </span>
-                        </div>
-						<?php $time_to_finish  = time_lot(); ?>
-                        <div class="lot__timer timer <?php if ($time_to_finish["priznak_finish"]== true):?>timer--finishing<?php endif; ?>">
-                           <?=$time_to_finish["finish_time"];?>  
+                        </div>						 
+                        <div class="lot__timer timer <?php if ($time_to_finish['feature_finish'] === true):?>timer--finishing<?php endif; ?>">
+                           <?=$time_to_finish['finish_time'];?>  
                         </div>
                     </div>
                 </div>
