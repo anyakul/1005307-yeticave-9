@@ -35,8 +35,8 @@
                             <span class="lot__cost"><?=format_price(htmlspecialchars($val['price'] ))?><b class="rub">₽</b>  </span>
                         </div>						 
                         <div class="lot__timer timer <?php if ($time_to_finish['feature_finish'] === true):?>timer--finishing<?php endif; ?>">
-                           <?=$time_to_finish['finish_time'];?>  
-                        </div>
+                          <?=$time_to_finish['finish_time'];?> 
+						</div>
                     </div>
                 </div>
             </li>

@@ -55,7 +55,8 @@ $user_name = "Аня Куликова"; // укажите здесь ваше и
 	// функция определения времени жизни лота до полуночи
 	
 	 function time_lot() {			
-		    $time_to_midnight = ['finish_time' => '',
+		   $time_to_midnight = [
+		   'finish_time' => '',
 			'feature_finish' => false
 			];			
             $secs_to_midnight = strtotime('tomorrow') - time();	
@@ -66,16 +67,10 @@ $user_name = "Аня Куликова"; // укажите здесь ваше и
 			
 	        // вычисляем количество минут и переволим в строку 	
             $minutes = floor(($secs_to_midnight % 3600) / 60); 
-			$minutes_str=(string)$minutes ;
+			$minutes_str=(string)$minutes ;		
+			$time_to_midnight['finish_time'] = str_pad($hours_str, 2, "0", STR_PAD_LEFT) . ":" . str_pad($minutes_str, 2, "0", STR_PAD_LEFT );
 			
-	        //	добавляем  0, если количество минут или часов меньше 10			
-			if ($minutes < 10): $minutes_str='0' .$minutes_str; endif;			    
-			if ($hours < 10) : $hours_str='0' .$hours_str; endif;
-			
-	        // записываем время в формате ЧЧ:ММ				
-		    $time_to_midnight['finish_time'] =  $hours_str .':' .$minutes_str;
-
-            // записываем признак, что осталось меньше или равно одного часа			
+		    // записываем признак, что осталось меньше или равно одного часа			
 		    if ($hours  <  1 or $hours === 1 and $minutes === 0) : $time_to_midnight['feature_finish'] = true; endif;
 			
 		    return $time_to_midnight;
