@@ -15,7 +15,7 @@ id INT AUTO_INCREMENT PRIMARY KEY,
 user_id INT UNSIGNED,
 user_winner_id INT UNSIGNED,
 category_id INT UNSIGNED,
-dt_add DATETIME,
+date_create DATETIME,
 name char(128),
 description text,
 image char(128) ,
@@ -28,14 +28,12 @@ CREATE TABLE rates (
 id INT AUTO_INCREMENT PRIMARY KEY,
 user_id INT UNSIGNED,
 lot_id INT UNSIGNED,
-dt_add DATETIME,
+date_create DATETIME,
 price int
 );
 
 CREATE TABLE users (
-id INT AUTO_INCREMENT PRIMARY KEY,
-lot_id INT UNSIGNED,
-rate_id INT UNSIGNED,
+id INT AUTO_INCREMENT PRIMARY KEY, 
 date_registration DATETIME,
 email char(128),
 name char(128),
