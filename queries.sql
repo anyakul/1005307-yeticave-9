@@ -28,7 +28,7 @@ INSERT INTO rates set user_id = 2, lot_id = 1, date_create = now(), price = 1299
 SELECT * FROM categories;
 
 /*получить самые новые, открытые лоты. Каждый лот должен включать название, стартовую цену, ссылку на изображение, цену, название категории;*/
-SELECT l.id, l.NAME, l.start_price, l.image, l.category_id FROM lots l WHERE DATE(l.date_create) = CURRENT_DATE()  ;
+SELECT id, NAME, start_price, image, category_id FROM lots l WHERE DATE(date_create) = CURRENT_DATE()  ;
 
 /*показать лот по его id. Получите также название категории, к которой принадлежит лот;*/
 SELECT l.id, l.NAME, c.name  FROM lots l 
