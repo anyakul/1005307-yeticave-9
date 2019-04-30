@@ -59,11 +59,11 @@
 		
             <!--заполняем этот список из массива категорий-->
 			
-		<?php	foreach ($categories as  $val): ?>
+			<?php foreach ($categories as $val): ?> 
             <li class="nav__item">
-                <a href="pages/all-lots.html"><?=htmlspecialchars($val)?></a>
+            <a href="pages/all-lots.html"><?=htmlspecialchars($val['name'])?></a>
             </li>
-		<?php endforeach; ?>
+		    <?php endforeach; ?>
 		      
         </ul>
     </nav>
