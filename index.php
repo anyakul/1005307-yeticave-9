@@ -20,8 +20,6 @@ $user_name = "Аня Куликова"; // укажите здесь ваше и
 				$categories = mysqli_fetch_all($res_c, MYSQLI_ASSOC);	
 				
 				$sql = 'SELECT c.NAME category, l.image, l.name, l.start_price FROM lots l JOIN categories c ON c.id = l.category_id WHERE DATE(date_create) = CURRENT_DATE()';
-				
-//				l.id, l.name, c.NAME category, l.start_price, l.image FROM lots l JOIN categories c ON l.category_id = c.id ";
 				$res_l = mysqli_query($con, $sql);
 				$lots = mysqli_fetch_all($res_l, MYSQLI_ASSOC);	
  	 		foreach($lots as $val): print ($val['l.name']);    endforeach;  
