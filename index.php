@@ -3,49 +3,30 @@ $is_auth = rand(0, 1);
 $user_name = "Аня Куликова"; // укажите здесь ваше имя
  
  
- // Создаем  массивы    
-     
-	    $categories = ["Доски и лыжи", "Крепления", "Ботинки", "Одежда", "Инструменты", "Разное"]; 
-		  
- 		$goods = [ 
-		   [
-		       'name' => '2014 Rossignol District Snowboard',
-		       'category' => $categories[0],
-		       'price' => 10999,
-		       'url' => 'img/lot-1.jpg'
-		    ],
- 		    [
-		       'name' => 'DC Ply Mens 2016/2017 Snowboard',
-		       'category' => $categories[0],
-		       'price' => 159999,
-		       'url' => 'img/lot-2.jpg'
-		    ],
-		    [
-		       'name' => 'Крепления Union Contact Pro 2015 года размер L/XL',
-		       'category' => $categories[1],
-		       'price' => 8000,
-		       'url' => 'img/lot-3.jpg'
-		    ],
-		    [
-		       'name' => 'Ботинки для сноуборда DC Mutiny Charocal',
-		       'category' => $categories[2],
-		       'price' => 10999,
-		       'url' => 'img/lot-4.jpg'
-		    ],
-		    [
-		       'name' => 'Куртка для сноуборда DC Mutiny Charocal',
-		       'category' => $categories[3],
-		       'price' => 7500,
-		       'url' => 'img/lot-5.jpg'
-		    ],
-		    [
-		       'name' => 'Маска Oakley Canopy',
-		       'category' => $categories[5],
-		       'price' => 397.5,
-		       'url' => 'img/lot-6.jpg'
-		    ] 
-		];
-  		
+ // Создаем  массивы 
+
+   $con = mysqli_connect("localhost", "root", "", "yeticave");
+				if ($con == false) {
+					print("Ошибка подключения: " . mysqli_connect_error());
+				}
+				else {
+					print("Соединение установлено");
+					// выполнение запросов
+				}
+				mysqli_set_charset($con, "utf8");
+				
+				$sql = "SELECT * FROM categories";
+				$res_c = mysqli_query($con, $sql);
+				$categories = mysqli_fetch_all($res_c, MYSQLI_ASSOC);	
+				
+				$sql = 'SELECT c.NAME category, l.image, l.name, l.start_price FROM lots l JOIN categories c ON c.id = l.category_id WHERE DATE(date_create) = CURRENT_DATE()';
+				
+//				l.id, l.name, c.NAME category, l.start_price, l.image FROM lots l JOIN categories c ON l.category_id = c.id ";
+				$res_l = mysqli_query($con, $sql);
+				$lots = mysqli_fetch_all($res_l, MYSQLI_ASSOC);	
+ 	 		foreach($lots as $val): print ($val['l.name']);    endforeach;  
+			 		    
+
    
 	//  Добавляем функцию форматирования цены
 	
@@ -86,7 +67,7 @@ $user_name = "Аня Куликова"; // укажите здесь ваше и
 	 
 	// HTML код главной страницы
 	
-     $page_content = include_template('main.php', ['categories' => $categories, 'goods' => $goods, 'time_to_finish' => $time_to_finish] );
+     $page_content = include_template('main.php', ['categories' => $categories, 'lots' => $lots, 'time_to_finish' => $time_to_finish] );
      
     
 	// окончательный HTML код

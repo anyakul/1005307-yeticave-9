@@ -10,12 +10,12 @@ INSERT INTO categories (name, symbol_code) VALUES ('Разное', 'others');
 INSERT INTO users email = 'user1@gmail.com', date_registration = now(), name = 'user1', password = '4terg4', contacts = '+79435345653';
 INSERT INTO users email = 'user2@gmail.com', date_registration = now(), name = 'user2', password = '5tgjl6', contacts = '+73458654334';
 
-INSERT INTO lots set user_id = 1, category_id = 1, date_create = now(), name = '2014 Rossignol District Snowboard', image = 'img/lot1', start_price = 10999, step_rate = 1000;
-INSERT INTO lots set user_id = 1, category_id = 1, date_create = now(), name = 'DC Ply Mens 2016/2017 Snowboard', image = 'img/lot2', start_price = 159999, step_rate = 1000;
-INSERT INTO lots set user_id = 1, category_id = 2, date_create = now(), name = 'Крепления Union Contact Pro 2015 года размер L/XL', image = 'img/lot3', start_price = 8000, step_rate = 1000;
-INSERT INTO lots set user_id = 2, category_id = 3, date_create = now(), name = 'Ботинки для сноуборда DC Mutiny Charocal', image = 'img/lot4', start_price = 10999, step_rate = 1000;
-INSERT INTO lots set user_id = 2, category_id = 4, date_create = now(), name = 'Куртка для сноуборда DC Mutiny Charocal', image = 'img/lot5', start_price = 7500, step_rate = 500;
-INSERT INTO lots set user_id = 2, category_id = 6, date_create = now(), name = 'Маска Oakley Canopy', image = 'img/lot5', start_price = 398, step_rate = 100;
+INSERT INTO lots set user_id = 1, category_id = 1, date_create = now(), name = '2014 Rossignol District Snowboard', image = 'img/lot-1', start_price = 10999, step_rate = 1000;
+INSERT INTO lots set user_id = 1, category_id = 1, date_create = now(), name = 'DC Ply Mens 2016/2017 Snowboard', image = 'img/lot-2', start_price = 159999, step_rate = 1000;
+INSERT INTO lots set user_id = 1, category_id = 2, date_create = now(), name = 'Крепления Union Contact Pro 2015 года размер L/XL', image = 'img/lot-3', start_price = 8000, step_rate = 1000;
+INSERT INTO lots set user_id = 2, category_id = 3, date_create = now(), name = 'Ботинки для сноуборда DC Mutiny Charocal', image = 'img/lot-4', start_price = 10999, step_rate = 1000;
+INSERT INTO lots set user_id = 2, category_id = 4, date_create = now(), name = 'Куртка для сноуборда DC Mutiny Charocal', image = 'img/lot-5', start_price = 7500, step_rate = 500;
+INSERT INTO lots set user_id = 2, category_id = 6, date_create = now(), name = 'Маска Oakley Canopy', image = 'img/lot-5', start_price = 398, step_rate = 100;
 
 INSERT INTO rates set user_id = 1, lot_id = 1, date_create = now(), price = 11999 ;
 INSERT INTO rates set user_id = 2, lot_id = 1, date_create = now(), price = 12999 ;
