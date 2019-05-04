@@ -6,12 +6,12 @@ $user_name = "Аня Куликова"; // укажите здесь ваше и
  // подключаем базу данных и создаем массивы
 
    $con = mysqli_connect("localhost", "root", "", "yeticave");
-	if ($con == false) {
-		print("Ошибка подключения: " . mysqli_connect_error());
-	}
-	else {
-		print("Соединение установлено");
-	}
+//	if ($con == false) {
+//		print("Ошибка подключения: " . mysqli_connect_error());
+//	}
+//	else {
+//		print("Соединение установлено");
+//	}
 	mysqli_set_charset($con, "utf8");				
     $sql = "SELECT * FROM categories";
 	$res_c = mysqli_query($con, $sql);

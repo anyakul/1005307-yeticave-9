@@ -3,12 +3,12 @@
     // устанавливаем соединение с базой данных и Создаем  массив категорий 
 
     $con = mysqli_connect("localhost", "root", "", "yeticave");
-				if ($con == false) {
-					print("Ошибка подключения: " . mysqli_connect_error());
-				}
-				else {
-					print("Соединение установлено");
-				}				
+				//if ($con == false) {
+				//	print("Ошибка подключения: " . mysqli_connect_error());
+				//}
+				//else {
+				//	print("Соединение установлено");
+				//}				
 				mysqli_set_charset($con, "utf8");
 				
 				// получаем из базы данных массив категорий
@@ -26,7 +26,7 @@
      require('helpers.php');       
  	   
      if (isset($_GET['id'])) {                                  // проверяем запрос на наличие ID лота
-	     $id=$_GET['id'];                               		// получаем id лота из запроса, если он там есть
+	     $id=addslashes($_GET['id']);                     		// получаем id лота из запроса, если он там есть
 		 
 		 // выбираем из базы  данных данные для лота с требуемым id 
 	     $sql = "SELECT c.name category, l.id, l.image, l.description, l.date_create,
@@ -55,18 +55,16 @@
                ['content' => $page_content, 'categories'=> $categories, 'title' => 'YetiCave - Главная', 'user_name' => $user_name, 'is_auth' => $is_auth ]);
 	           print($layout_content);
          }
-		 // страница с таким ID  не существует
-         else {	$page_content = include_template('404.php',[]); 
-                $layout_content = include_template('layout.php',
-                ['content' => $page_content, 'categories'=> $categories, 'title' => 'YetiCave - Главная', 'user_name' => $user_name, 'is_auth' => $is_auth ]);
-	            print($layout_content);
+		 // страница с таким ID  не существует или в id указано не число
+         else {	
+		       http_response_code(404);
+		       header("location: /pages/404.html");
          }				
 	 }
-	     // в запросе отсутсвует ID
-	  else { $page_content = include_template('404.php'); 
-             $layout_content = include_template('layout.php',
-               ['content' => $page_content, 'categories'=> $categories, 'title' => 'YetiCave - Главная', 'user_name' => $user_name, 'is_auth' => $is_auth ]);
-	         print($layout_content);
-	  }
+	// в запросе отсутсвует ID
+    else {	
+		  http_response_code(404);
+		  header("location: /pages/404.html");
+    }	
 ?>     
    
