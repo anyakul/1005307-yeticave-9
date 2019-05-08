@@ -25,7 +25,7 @@
                   <option><?=$val['name']?></option>
             <?php endforeach; ?> 			
           </select>		   
-          <span class="form__error"><?=$value_span ?></span>
+          <span class="form__error"><?=$value_error ?></span>
         </div>
       </div>
 	  <?php $classname =isset($errors['message']) ? "form__item--invalid" : "";		 
