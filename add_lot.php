@@ -28,97 +28,81 @@
 		
 				 
         
-	$errors=[];
+	
 	    //  проверка   получения формы
-        if($_SERVER['REQUEST_METHOD'] == 'POST') {	
-			$lot  = $_POST ; 
+		$errors = [];
+		$lot = []; 
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+			$lot = $_POST; 
 			// поля, обязательные для заполнения
-			$required = ['lot-name', 'category', 'message',   'lot-rate', 'lot-step', 'lot-date'];
+			$required = ['lot-name', 'category', 'message', 'image',  'lot-rate', 'lot-step', 'lot-date']; 
 			
-			
-			 // загрузка изображения и проверка формата файла
-			if ( empty($_FILES['lot-img']['tmp_name'])) {
-				 $errors['image'] = 'Файл не загружен.';				   
+			//  валидация всех текстовых полей формы
+			$error = 'это поле обязательно для заполнения';
+			if (empty($lot['lot-name'])) { $errors['lot-name'] = $error; }
+			if ($lot['category'] == 'Выберите категорию') {$errors['category'] = 'надо выбрать категорию';}
+			if (empty($lot['message'])) {$errors['message'] = $error;}
+			if ($lot['lot-rate'] <= 0 or (int)($lot['lot-rate']) != $lot['lot-rate'] ) {$errors['lot-rate'] = 'цена должна быть целым положительным числом';;}
+			if ($lot['lot-step'] <= 0 or (int)($lot['lot-step']) != $lot['lot-step'] ) {$errors['lot-step'] = 'цена должна быть целым положительным числом';;}
+			if (!is_date_valid($lot['lot-date'])) {
+				$errors['lot-date'] = 'должен соблюдаться формат вводимой даты';
 			}
-			else {
-			   $finfo = finfo_open(FILEINFO_MIME_TYPE);
-               $file_name = $_FILES['lot-img']['tmp_name'];
-			   $file_type = finfo_file($finfo, $file_name);				 
-			   if ($file_type != 'image/jpeg') {
-				   $errors['image'] = 'загрузите картинку в формате jpeg или jpg';
-			   }
-               else {
-				  $file_path = __DIR__ . '/uploads/';				     
-                  move_uploaded_file( $_FILES['lot-img']['tmp_name'], $file_path . $_FILES['lot-img']['name']);
-				  $lot['image'] = 'uploads/' . $_FILES['lot-img']['name'];				  
-			   }
-            }			   
-					
-		    // проверка правильности заполнения всех текстовых полей формы
-			foreach ($required as $key ) {
-			   if(empty($lot[$key])) {
-				   $errors[$key] = 'поле должно быть заполнено';
-			   } 
-               else {
-				  if(($key == 'lot-rate' or $key == 'lot-step')  
-					       and (!is_numeric($lot[$key]) or  $lot[$key] <= 0 or  (int)($lot[$key]) != $lot[$key])) {
-				   	$errors[$key] = 'должно вводиться только целое положительное число';
-			      }
-			      if(($key == 'lot-date') and !is_date_valid($lot[$key]))  {
-					   $errors[$key] = 'должен соблюдаться формат вводимой даты';
-					   if(diff($lot[$key],date(now)) <1 ) {
-					       $errors[$key] = 'время завершения торгов по лоту должно отличаться от текущей не менее, чем на 1 час';
+			 			
+			// Если все текстовые поля прошли валидацию, то проводим валидацию файла изображения
+			if (count($errors) == 0) {
+			     //  проверка наличия загрузки и формата файла  
+			    if ( empty($_FILES['lot-img']['tmp_name'])) {
+				    $errors['image'] = 'Файл не загружен.';				   
+			    }                                                                 
+			    else {
+			       $finfo = finfo_open(FILEINFO_MIME_TYPE);
+                   $file_name = $_FILES['lot-img']['tmp_name'];
+			       $file_type = finfo_file($finfo, $file_name);				 
+			       if ($file_type != 'image/jpeg') {
+				       $errors['image'] = 'загрузите картинку в формате jpeg или jpg';
+			       }
+                   else { // Проверка файла изображения прошла успешно и записываем этот файл в папку uploads
+				      $file_path = __DIR__ . '/uploads/';				     
+                      move_uploaded_file( $_FILES['lot-img']['tmp_name'], $file_path . $_FILES['lot-img']['name']);
+				      $lot['image'] = 'uploads/' . $_FILES['lot-img']['name'];
+					  
+					   // записываем введенные данные в базу данных и переходим на страницу показа введенного лота 
+					   foreach ($required as $key) {
+						   $lot[$key] = addslashes($lot[$key]);
 					   }
-				  }
-				  if ($key == 'category' and $lot[$key] == 'Выберите категорию') {
-					  $errors[$key] = 'Не выбрана категория';
-				  }
-			   }			  
-			} 
+					   $lots['user_id'] = 2;
+					   $lot['category'] =2;			    	  
+                       $sql = "INSERT INTO lots (  date_create, name,  category_id, user_id, start_price, description, step_rate, date_finish, image) 
+					          VALUES  (NOW(),?,?,2,?,?,?,?,?)";
+                       $stmt = db_get_prepare_stmt($con, $sql, [$lot['lot-name'], $lot['category'], $lot['lot-rate'], $lot['message'], $lot['lot-step'],
+                                $lot['lot-date'], $lot['image']]);  				    
+ 			           $res  = mysqli_stmt_execute($stmt);		        	 
+					   if($res) {
+						   $lot_id = mysqli_insert_id($con);
+					   }					 
+					   $con = mysqli_connect("localhost", "root", "", "yeticave"); 
+					   
+			 		   header("location: lot.php?id=" . "$lot_id"  );
+		          					 
+			        }
+				}   
+            }					
+		}
 				
-		   
-		  
-			   
-			if(count($errors) == 0){
-			    	 
-			        // добавляем страницу с новым лотом
-			    	$sql = "INSERT INTO lots SET name = '{$_POST['lot-name']}' , start_price = '{$_POST['lot-rate']}', category_id = '1',
-			                user_id ='2',  description ='{$_POST['message']}',  step_rate = '{$_POST['lot-step']}', date_finish = '{$_POST['lot-date']}'" ;  
- 			        $res_i = mysqli_query($con, $sql);	
-					
-	 				// определяем  время жизни лота до полуночи b вводим переменную с символом рубля	
-	                $time_to_finish  = time_lot();
-		            $add_ruble='<b class="rub">₽</b>';
-					
-					// подключаем lot.php 
-                    $val=[];
-					$val['name'] = $lot['lot-name'];
-                    $val['image'] = $lot['image'];					
-                    $val['category'] = $lot['category'];
-                    $val['start_price']	= $lot['lot-rate'];	
-                    $val['descrition']	= $lot['message'];					
-                    $page_content = include_template('lot.php', [ 'val' => $val , 'time_to_finish' => $time_to_finish, 'add_ruble' => $add_ruble] );
-					
-		            // подключаем layout.php
- 	                $layout_content = include_template('layout.php',
-                         ['content' => $page_content, 'categories'=> $categories, 'title' => 'YetiCave - Главная',
-						 'user_name' => $user_name, 'is_auth' => $is_auth ]);
-	                print($layout_content);					 
-			} 	
-		    else {
-				 // должны остаться на той же странице с изменнненными классами и сохраненными данными
+		// должны остаться на той же странице с изменнненными классами и сохраненными данными
   			 
- 				  $page_content = include_template('add_lot.php', [ 'categories' => $categories, 'lot' =>$lot, 'errors' => $errors]);		         
- 	              $layout_content = include_template('layout.php',
-                         ['content' => $page_content, 'categories'=> $categories, 'title' => 'YetiCave - Главная', 'user_name' => $user_name, 'is_auth' => $is_auth ]);
-                  print($layout_content);			  
-			}
-        }  
-        else {  
-		    $page_content = include_template('add_lot.php', [ 'categories' => $categories, 'lot' =>$lot, 'errors' => $errors]);			   
-		    // подключаем layout.php
- 	        $layout_content = include_template('layout.php',
-                 ['content' => $page_content, 'categories'=> $categories, 'title' => 'YetiCave - Главная', 'user_name' => $user_name, 'is_auth' => $is_auth ]);
-            print($layout_content);		  
-		}  
-?>                
+ 		$page_content = include_template('add_lot.php', [ 'categories' => $categories, 'lot' =>$lot, 'errors' => $errors]);		         
+ 	    $layout_content = include_template('layout.php',
+               ['content' => $page_content, 'categories'=> $categories, 'title' => 'YetiCave - Главная', 'user_name' => $user_name, 'is_auth' => $is_auth ]);
+        print($layout_content);			   
+?> 		  
+			   
+			 
+			    	 
+			 
+				   
+		   
+          
+		  
+		   
+               
