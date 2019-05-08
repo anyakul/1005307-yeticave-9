@@ -44,9 +44,9 @@
       <div class="form__item form__item--file  <?=$classname ?> ">
         <label>Изображение <sup>*</sup></label>
         <div class="form__input-file <?=$classname ?> ">
-          <input class="visually-hidden " type="file" id="lot-img" name="lot-img"  value="<?=$value_error ?>">  
+          <input class="visually-hidden " type="file" id="lot-img" name="lot-img"  value="<?=$value_input ?>">  
           <label for="lot-img">
-           <?=$value_span?>
+           <?=$value_error?>
           </label>
         </div>
       </div>
