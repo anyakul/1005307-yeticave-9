@@ -44,7 +44,7 @@
       <div class="form__item form__item--file  <?=$classname ?> ">
         <label>Изображение <sup>*</sup></label>
         <div class="form__input-file <?=$classname ?> ">
-          <input class="visually-hidden " type="file" id="lot-img" name="lot-img"  value="<?=$value_span ?>">  
+          <input class="visually-hidden " type="file" id="lot-img" name="lot-img"  value="<?=$value_input ?>">  
           <label for="lot-img">
            <?=$value_span?>
           </label>
@@ -75,7 +75,7 @@
 		?>     		
         <div class="form__item <?=$classname ?> ">
           <label for="lot-date">Дата окончания торгов <sup>*</sup></label>
-          <input class="form__input-date"   id="lot-date" type="text" name="lot-date" placeholder="Введите дату в формате ГГГГ-ММ-ДД">
+          <input class="form__input-date"  <?=$value_input?> id="lot-date" type="text" name="lot-date" placeholder="Введите дату в формате ГГГГ-ММ-ДД">
           <span class="form__error"><?=$value_span ?></span>
         </div>
       </div>
