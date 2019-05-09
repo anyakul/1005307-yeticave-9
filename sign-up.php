@@ -25,8 +25,6 @@
 		$categories = mysqli_fetch_all($res_c, MYSQLI_ASSOC);  
 		   
        //Написать код валидации формы и показа ошибок.
-		session_start();
-		if (!isset($session['user'])) {
 			$errors = [];
 			$user = [];
 			if($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -63,7 +61,6 @@
 					header("location: login.php");
 				}
 		    }
-	    }
 		
 		// должны остаться на той же странице с изменнненными классами и сохраненными данными
   			 
