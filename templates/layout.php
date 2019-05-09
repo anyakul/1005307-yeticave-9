@@ -34,7 +34,7 @@
 		     <a class="user-menu__bets" href="pages/my-bets.html">Мои ставки</a>
 		     <a class="user-menu__logout" href="#">Выход</a>
 		   </div>--> 
-        <?php if ($is_auth==0): ?> 		    
+	    
 			<ul class="user-menu__list">
 		      <li class="user-menu__item">
 		        <a href="sign-up.php">Регистрация</a>
@@ -43,7 +43,7 @@
 		         <a href="#">Вход</a>
 		      </li>
 			</ul> 
-		<?php endif; ?>                                          
+                                         
         </nav>
     </div>
 </header>
