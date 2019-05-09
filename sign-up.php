@@ -50,7 +50,8 @@
 					$passwordHash = password_hash('secret-password', PASSWORD_DEFAULT);
 					$sql = "INSERT INTO users (date_registration, email, password, name, contacts) 
 					       VALUES (NOW(),?,?,?,?)";
-					$stmt = db_get_prepare_stmt($con, $sql, [$user['email'], $passwordHash, $user['name'], $user['message']]);  				    
+					$stmt = db_get_prepare_stmt($con, $sql, [$user['email'], $passwordHash, $user['name'], $user['message']]);  
+					$res  = mysqli_stmt_execute($stmt);				    
 					header("location: login.php");
 				}
 		    }
