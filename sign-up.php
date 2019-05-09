@@ -42,7 +42,7 @@
 				}
 				if ($key == "email" and !filter_var($value, FILTER_VALIDATE_EMAIL)) {
 					$errors[$key] = 'Email должен быть корректным';
-					if (isset($user[email])) {
+					if (isset($users['email'])) {
 						$errors[$key] = 'Данный email уже использовался. попробуйте войти в аккаунт';
 					}
 				}
