@@ -51,11 +51,6 @@
 					$sql = "INSERT INTO users (date_registration, email, password, name, contacts) 
 					       VALUES (NOW(),?,?,?,?)";
 					$stmt = db_get_prepare_stmt($con, $sql, [$user['email'], $passwordHash, $user['name'], $user['message']]);  				    
- 			        $res  = mysqli_stmt_execute($stmt);		        	 
-					if($res) {
-					   $user_id = mysqli_insert_id($con);
-					}					 
-					$con = mysqli_connect("localhost", "root", "", "yeticave"); 
 					header("location: login.php");
 				}
 		    }

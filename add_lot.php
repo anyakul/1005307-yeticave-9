@@ -73,7 +73,6 @@
 					   }
 					   $lots['user_id'] = 2;
 					   $lot['category'] =2;			    	  
-                       $sql = "SELECT l.id, l.NAME, c.name category FROM lots l JOIN categories c ON l.category_id = c.id";
 					   $sql = "INSERT INTO lots (  date_create, name,  category_id, user_id, start_price, description, step_rate, date_finish, image) 
 					          VALUES  (NOW(),?,?,2,?,?,?,?,?)";
 					   $stmt = db_get_prepare_stmt($con, $sql, [$lot['lot-name'], $lot['category'], $lot['lot-rate'], $lot['message'], $lot['lot-step'],
