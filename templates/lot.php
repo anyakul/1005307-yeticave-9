@@ -1,5 +1,4 @@
-
-    <section class="lot-item container">
+ <section class="lot-item container">
       <h2><?=$val['name']?></h2>
       <div class="lot-item__content">
         <div class="lot-item__left">

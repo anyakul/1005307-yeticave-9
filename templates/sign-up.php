@@ -1,4 +1,4 @@
-   <?php $class_form = (count($errors) > 0) ? "form--invalid" : ""; ?>	 
+  <?php $class_form = (count($errors) > 0) ? "form--invalid" : ""; ?>	 
     <form class="form form--add-lot container <?=$class_form?>" action="sign-up.php" method="post"> <!-- form--invalid --><!-- form--invalid -->
       <h2>Регистрация нового аккаунта</h2>
         <?php $classname =isset($errors['email']) ? "form__item--invalid" : "";		 

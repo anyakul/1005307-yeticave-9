@@ -1,7 +1,6 @@
 <?php 
  
         // устанавливаем соединение с базой данных и Создаем  массив категорий 
-
         $con = mysqli_connect("localhost", "root", "", "yeticave");
      	if ($con == false) {
 // 			print("Ошибка подключения: " . mysqli_connect_error());
@@ -16,7 +15,6 @@
         require('my_function.php'); 
  	 
 	    // добавляем функции из helper  
-
         require('helpers.php');
 		
 		// получаем из базы данных массив категорий

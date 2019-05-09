@@ -4,7 +4,6 @@ $user_name = "Аня Куликова"; // укажите здесь ваше и
  
  
  // подключаем базу данных и создаем массивы
-
    $con = mysqli_connect("localhost", "root", "", "yeticave");
 //	if ($con == false) {
 //		print("Ошибка подключения: " . mysqli_connect_error());
@@ -25,11 +24,8 @@ $user_name = "Аня Куликова"; // укажите здесь ваше и
 	//добавляем мои функции
 	
 	 require('my_function.php');
-
 	// добавляем функции из helper  
-
      require('helpers.php');
-
     // форматируем оставшееся время до завершения
 	
 	 $time_to_finish  = time_lot();
