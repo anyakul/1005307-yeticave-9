@@ -51,7 +51,7 @@
 					foreach ($required as $key) {
 						$user[$key] = addslashes($user[$key]);
 					}
-					$users['password'] = password_hash('secret-password', PASSWORD_DEFAULT);
+					$user['password'] = password_hash('secret-password', PASSWORD_DEFAULT);
 					$sql = "INSERT INTO users (date_registration, email, password, name, contacts) 
 					       VALUES (NOW(),?,?,?,?)";
 					$stmt = db_get_prepare_stmt($con, $sql, [$user['email'], $user['password'], $user['name'], $user['message']]);  				    
