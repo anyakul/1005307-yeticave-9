@@ -50,7 +50,7 @@
 			   
 		       // подключаем layout.php
  	           $layout_content = include_template('layout.php',
-               ['content' => $page_content, 'categories'=> $categories, 'title' => 'YetiCave - Главная', 'user_name' => $user_name, 'is_auth' => $is_auth ]);
+               ['content' => $page_content, 'categories'=> $categories, 'title' => 'YetiCave - Просмотр лота', 'user_name' => $user_name, 'is_auth' => $is_auth ]);
 	           print($layout_content);
          }
 		 // страница с таким ID  не существует или в id указано не число

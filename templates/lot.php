@@ -8,6 +8,7 @@
           <p class="lot-item__category">Категория: <span><?=$val['category']?></span></p>
           <p class="lot-item__description"><?=$val['description']?></p>
         </div>
+		<?php if (isset($_SESSION['user_name'])): ?>
         <div class="lot-item__right">
           <div class="lot-item__state">
             <div class="lot-item__timer timer<?php if ($time_to_finish['feature_finish'] === true):?>timer--finishing<?php endif; ?>">
@@ -90,5 +91,6 @@
 		-->
           </div>
         </div>
+		<?php endif ?>
       </div>
     </section>

@@ -40,8 +40,8 @@
 			if (empty($lot['lot-name'])) { $errors['lot-name'] = $error; }
 			if ($lot['category'] == 'Выберите категорию') {$errors['category'] = 'надо выбрать категорию';}
 			if (empty($lot['message'])) {$errors['message'] = $error;}
-			if ($lot['lot-rate'] <= 0 or {$errors['lot-rate'] = 'цена должна быть положительным числом';;}
-			if ($lot['lot-step'] <= 0 or (int)($lot['lot-step']) != $lot['lot-step'] ) {$errors['lot-step'] = 'цена должна быть целым положительным числом';;}
+			if ($lot['lot-rate'] <= 0) {$errors['lot-rate'] = 'цена должна быть положительным числом';}
+			if ($lot['lot-step'] <= 0 or (int)($lot['lot-step']) != $lot['lot-step'] ) {$errors['lot-step'] = 'цена должна быть целым положительным числом';}
 			if (!is_date_valid($lot['lot-date'])) {
 				$errors['lot-date'] = 'должен соблюдаться формат вводимой даты';
 				if ($lot['lot-date'] <= date("Y-m-d")) {
@@ -90,12 +90,17 @@
             }					
 		}
 				
-		// должны остаться на той же странице с изменнненными классами и сохраненными данными
-  			 
- 		$page_content = include_template('add_lot.php', [ 'categories' => $categories, 'lot' =>$lot, 'errors' => $errors]);		         
- 	    $layout_content = include_template('layout.php',
-               ['content' => $page_content, 'categories'=> $categories, 'title' => 'YetiCave - Главная', 'user_name' => $user_name, 'is_auth' => $is_auth ]);
-        print($layout_content);			   
+		// если пользователь авторизован - открыть содержимое страницы. если нет - открыть ошибку 403.
+			 if (!isset($_SESSION['user_name'])) {
+				 http_response_code(403);
+				 exit();
+		    }
+			else {
+				$page_content = include_template('add_lot.php', [ 'categories' => $categories, 'lot' =>$lot, 'errors' => $errors]);	
+				$layout_content = include_template('layout.php',
+				['content' => $page_content, 'categories'=> $categories, 'title' => 'YetiCave - Добавление лота', 'user_name' => $user_name, 'is_auth' => $is_auth ]);
+				print($layout_content);			   
+			}
 ?> 		  
 			   
 			 
