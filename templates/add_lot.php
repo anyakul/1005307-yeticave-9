@@ -1,6 +1,5 @@
  
-
-    <?php $class_form = (count($errors) > 0) ? "form--invalid" : ""; ?>	 
+<?php $class_form = (count($errors) > 0) ? "form--invalid" : ""; ?>	 
     <form class="form form--add-lot container <?=$class_form?>"  action="add_lot.php" method="post" enctype="multipart/form-data"> <!-- form--invalid -->
       <h2>Добавление лота</h2>
       <div class="form__container-two">
@@ -83,5 +82,4 @@
       <button type="submit" class="button">Добавить лот</button>
     </form>
  
-
  

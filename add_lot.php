@@ -1,7 +1,6 @@
 <?php 
  
         // устанавливаем соединение с базой данных и Создаем  массив категорий 
-
         $con = mysqli_connect("localhost", "root", "", "yeticave");
      	if ($con == false) {
 // 			print("Ошибка подключения: " . mysqli_connect_error());
@@ -21,7 +20,6 @@
         require('my_function.php'); 
  	 
 	    // добавляем функции из helper  
-
         require('helpers.php');
 		   
         // подключаем страницу с добавлением  лота
@@ -42,7 +40,7 @@
 			if (empty($lot['lot-name'])) { $errors['lot-name'] = $error; }
 			if ($lot['category'] == 'Выберите категорию') {$errors['category'] = 'надо выбрать категорию';}
 			if (empty($lot['message'])) {$errors['message'] = $error;}
-			if ($lot['lot-rate'] <= 0 or (int)($lot['lot-rate']) != $lot['lot-rate'] ) {$errors['lot-rate'] = 'цена должна быть целым положительным числом';;}
+			if ($lot['lot-rate'] <= 0 or {$errors['lot-rate'] = 'цена должна быть положительным числом';;}
 			if ($lot['lot-step'] <= 0 or (int)($lot['lot-step']) != $lot['lot-step'] ) {$errors['lot-step'] = 'цена должна быть целым положительным числом';;}
 			if (!is_date_valid($lot['lot-date'])) {
 				$errors['lot-date'] = 'должен соблюдаться формат вводимой даты';
@@ -75,9 +73,9 @@
 					   }
 					   $lots['user_id'] = 2;
 					   $lot['category'] =2;			    	  
-                       $sql = "INSERT INTO lots (  date_create, name,  category_id, user_id, start_price, description, step_rate, date_finish, image) 
+					   $sql = "INSERT INTO lots (  date_create, name,  category_id, user_id, start_price, description, step_rate, date_finish, image) 
 					          VALUES  (NOW(),?,?,2,?,?,?,?,?)";
-                       $stmt = db_get_prepare_stmt($con, $sql, [$lot['lot-name'], $lot['category'], $lot['lot-rate'], $lot['message'], $lot['lot-step'],
+					   $stmt = db_get_prepare_stmt($con, $sql, [$lot['lot-name'], $lot['category'], $lot['lot-rate'], $lot['message'], $lot['lot-step'],
                                 $lot['lot-date'], $lot['image']]);  				    
  			           $res  = mysqli_stmt_execute($stmt);		        	 
 					   if($res) {

@@ -28,5 +28,4 @@
 		    return $time_to_midnight;
 	 }
  	 
-	 
 ?>
