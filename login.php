@@ -24,52 +24,57 @@
 		$res_c = mysqli_query($con, $sql);
 		$categories = mysqli_fetch_all($res_c, MYSQLI_ASSOC);  
 		
-		
+		session_start();
 		
        //Написать код валидации формы и показа ошибок.
-			$errors = [];
+			
 			$user = [];
 			if($_SERVER['REQUEST_METHOD'] == 'POST') {
-				$user = $_POST; 
+				$form = $_POST; 
 				// поля, обязательные для заполнения
 				$required = ['email', 'password']; 
+				$errors = [];
 				//  валидация всех текстовых полей формы
 				$error = 'это поле обязательно для заполнения';
 				foreach ($required as $key) {
-					if (empty($_POST[$key])) {
-						$errors[$key] = $error; 
+					if (empty($form[$key])) {
+						$errors[$key] = 'это поле обязательно для заполнения'; 
 					} 
 				}
 				// Проверка email
-				if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-					 $email = mysqli_real_escape_string($con, $_POST['email']);
-					 $sql = "SELECT * FROM users WHERE email = $email";
+					 $email = mysqli_real_escape_string($con, $form['email']);
+					 $sql = "SELECT * FROM users WHERE email = '$email'";
 					 $res = mysqli_query($con, $sql);
 					 $user = $res ? mysqli_fetch_array($res, MYSQLI_ASSOC) : null;
-					 if (!$user) {
-						 $errors[$key] = 'Пользователь с таким email не найден';
-					 }
 					 if (!count($errors) and $user) {
-						 if (password_verify($_POST['password'], $user['password'])) {
+						 if (password_verify($form['password'], $user['password'])) {
 							 $_SESSION['user'] = $user;
 							 } else {
 								 $errors['password'] = 'Неверный пароль';
 							 }
 					 }
-				}
 
-				//выполнить процесс аутентификации и переадресовать пользователя на главную страницу.
-				if (!count($errors)) {
-					session_start('user');
-					$user_name = $user[name];
-					header("Location: index.php");
-				}
+					 else {
+						$errors['email'] = 'Такой пользователь не найден';
+  					 }
+					 if (count($errors)) { 
+					     $page_content = include_template('login.php', ['form' => $form, 'errors' => $errors]);
+					}
+					else {
+						header("Location: /login.php");
+						exit();
+					}
 			}
-				
-		// должны остаться на той же странице с изменнненными классами и сохраненными данными
-  			 
- 		$page_content = include_template('login.php', [ 'categories' => $categories, 'user' =>$user, 'errors' => $errors]);		         
+			else {
+				if (isset($_SESSION['user'])) {
+					$page_content = include_template('index.php', ['user_name' => $_SESSION['user']['name']]);
+				}
+			else {
+				$page_content = include_template('login.php', []);
+			}
+		}
  	    $layout_content = include_template('layout.php',
-               ['content' => $page_content, 'categories'=> $categories, 'title' => 'YetiCave - Вход на сайт', 'user_name' => $user_name, 'is_auth' => $is_auth ]);
-        print($layout_content);			   
+               ['content' => $page_content, 'categories'=> $categories, 'title' => 'YetiCave - Вход на сайт']);
+        print($layout_content);		
+		   
 ?>
