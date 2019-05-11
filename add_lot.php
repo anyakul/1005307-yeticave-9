@@ -1,5 +1,9 @@
 <?php 
- 
+session_start();
+			 if (!isset($_SESSION['is_auth'])) {
+				 http_response_code(403);
+				 exit();
+		    }
         // устанавливаем соединение с базой данных и Создаем  массив категорий 
         $con = mysqli_connect("localhost", "root", "", "yeticave");
      	if ($con == false) {
@@ -25,7 +29,6 @@
         // подключаем страницу с добавлением  лота
 		
 				 
-        
 	
 	    //  проверка   получения формы
 		$errors = [];
@@ -71,8 +74,7 @@
 					   foreach ($required as $key) {
 						   $lot[$key] = addslashes($lot[$key]);
 					   }
-					   $lots['user_id'] = 2;
-					   $lot['category'] =2;			    	  
+					   $lots['user_id'] = 2;		    	  
 					   $sql = "INSERT INTO lots (  date_create, name,  category_id, user_id, start_price, description, step_rate, date_finish, image) 
 					          VALUES  (NOW(),?,?,2,?,?,?,?,?)";
 					   $stmt = db_get_prepare_stmt($con, $sql, [$lot['lot-name'], $lot['category'], $lot['lot-rate'], $lot['message'], $lot['lot-step'],
@@ -91,16 +93,13 @@
 		}
 				
 		// если пользователь авторизован - открыть содержимое страницы. если нет - открыть ошибку 403.
-			 if (!isset($_SESSION['user_name'])) {
-				 http_response_code(403);
-				 exit();
-		    }
-			else {
+
+			
 				$page_content = include_template('add_lot.php', [ 'categories' => $categories, 'lot' =>$lot, 'errors' => $errors]);	
 				$layout_content = include_template('layout.php',
 				['content' => $page_content, 'categories'=> $categories, 'title' => 'YetiCave - Добавление лота', 'user_name' => $user_name, 'is_auth' => $is_auth ]);
 				print($layout_content);			   
-			}
+			
 ?> 		  
 			   
 			 

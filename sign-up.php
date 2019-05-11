@@ -36,18 +36,21 @@
 						$errors[$key] = $error; 
 					} 
 				}
-				if ($key == "email" and !filter_var($value, FILTER_VALIDATE_EMAIL)) {
-					$errors[$key] = 'Email должен быть корректным';
-					if (isset($user['email'])) {
-						$errors[$key] = 'Данный email уже использовался. попробуйте войти в аккаунт';
-					}
+				if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+					$errors['email'] = 'Email должен быть корректным';
+				//	$sql = "SELECT id FROM users WHERE email = '$value'";
+				//	$res = mysqli_query($con, $sql);
+				//	$user = $res ? mysqli_fetch_array($res, MYSQLI_ASSOC) : null;
+					//if (isset($user['email'])) {
+					//	$errors[$key] = 'Данный email уже использовался. попробуйте войти в аккаунт';
+					//}
 				}
                 // Если ошибок нет, то сохранить данные формы в таблице пользователей
 			    if (count($errors) == 0) {
 					foreach ($required as $key) {
 						$user[$key] = addslashes($user[$key]);
 					}
-					$passwordHash = password_hash('secret-password', PASSWORD_DEFAULT);
+					$passwordHash = password_hash($_POST['password'], PASSWORD_DEFAULT);
 					$sql = "INSERT INTO users (date_registration, email, password, name, contacts) 
 					       VALUES (NOW(),?,?,?,?)";
 					$stmt = db_get_prepare_stmt($con, $sql, [$user['email'], $passwordHash, $user['name'], $user['message']]);  

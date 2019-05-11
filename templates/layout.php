@@ -27,7 +27,7 @@
         <!-- здесь должен быть PHP код для показа меню и данных пользователя -->
 		
 		<!-- данные пользователя-->
-	    <?php if (!isset($_SESSION['user_name'])): ?> 
+	    <?php  if (!empty($_SESSION['is_auth'])): ?>
 			<ul class="user-menu__list">
 		      <li class="user-menu__item">
 		        <a href="sign-up.php">Регистрация</a>

@@ -91,6 +91,6 @@
 		-->
           </div>
         </div>
-		<?php endif ?>
+		<?php endif; ?>
       </div>
     </section>

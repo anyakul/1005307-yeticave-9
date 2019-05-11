@@ -1,5 +1,5 @@
 <?php 
- 
+ session_start();
         // устанавливаем соединение с базой данных и Создаем  массив категорий 
 
         $con = mysqli_connect("localhost", "root", "", "yeticave");
@@ -24,18 +24,17 @@
 		$res_c = mysqli_query($con, $sql);
 		$categories = mysqli_fetch_all($res_c, MYSQLI_ASSOC);  
 		
-		session_start();
+
 		
        //Написать код валидации формы и показа ошибок.
 			
 			$user = [];
-			if($_SERVER['REQUEST_METHOD'] == 'POST') {
+			if($_SERVER['REQUEST_METHOD'] === 'POST') {
 				$form = $_POST; 
 				// поля, обязательные для заполнения
 				$required = ['email', 'password']; 
 				$errors = [];
 				//  валидация всех текстовых полей формы
-				$error = 'это поле обязательно для заполнения';
 				foreach ($required as $key) {
 					if (empty($form[$key])) {
 						$errors[$key] = 'это поле обязательно для заполнения'; 
@@ -43,12 +42,16 @@
 				}
 				// Проверка email
 					 $email = mysqli_real_escape_string($con, $form['email']);
+
 					 $sql = "SELECT * FROM users WHERE email = '$email'";
 					 $res = mysqli_query($con, $sql);
 					 $user = $res ? mysqli_fetch_array($res, MYSQLI_ASSOC) : null;
+
 					 if (!count($errors) and $user) {
 						 if (password_verify($form['password'], $user['password'])) {
 							 $_SESSION['user'] = $user;
+							 $_SESSION['is_auth'] = true;
+							 header("Location: /index.php");
 							 } else {
 								 $errors['password'] = 'Неверный пароль';
 							 }
@@ -60,18 +63,14 @@
 					 if (count($errors)) { 
 					     $page_content = include_template('login.php', ['form' => $form, 'errors' => $errors]);
 					}
-					else {
-						header("Location: /login.php");
-						exit();
-					}
 			}
 			else {
 				if (isset($_SESSION['user'])) {
-					$page_content = include_template('index.php', ['user_name' => $_SESSION['user']['name']]);
+					header("Location: /index.php");
 				}
-			else {
-				$page_content = include_template('login.php', []);
-			}
+				else {
+					$page_content = include_template('login.php', []);
+				}
 		}
  	    $layout_content = include_template('layout.php',
                ['content' => $page_content, 'categories'=> $categories, 'title' => 'YetiCave - Вход на сайт']);
