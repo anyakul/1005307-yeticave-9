@@ -27,20 +27,20 @@
         <!-- здесь должен быть PHP код для показа меню и данных пользователя -->
 		
 		<!-- данные пользователя-->
-	    <?php if ($is_auth==0): ?> 
+	    <?php  if (!empty($_SESSION['is_auth'])): ?>
 			<ul class="user-menu__list">
 		      <li class="user-menu__item">
 		        <a href="sign-up.php">Регистрация</a>
 		      </li>
 		      <li class="user-menu__item">
-		         <a href="#">Вход</a>
+		         <a href="login.php">Вход</a>
 		      </li>
 			</ul> 
 		<?php else:?>
 		<div class="user-menu__logged">
 		     <p><?= $user_name ?></p>
 		     <a class="user-menu__bets" href="pages/my-bets.html">Мои ставки</a>
-		     <a class="user-menu__logout" href="#">Выход</a>
+		     <a class="user-menu__logout" href="logout.php">Выход</a>
 		   </div>
         <?php endif?>                                 
         </nav>

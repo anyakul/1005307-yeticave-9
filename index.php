@@ -1,5 +1,5 @@
 ﻿<?php
-$is_auth = rand(0, 1);
+
 $user_name = "Аня Куликова"; // укажите здесь ваше имя
  
  
@@ -19,6 +19,8 @@ $user_name = "Аня Куликова"; // укажите здесь ваше и
 	$sql = "SELECT c.name category, l.image, l.name, l.page_adress, l.start_price FROM lots l JOIN categories c ON l.category_id = c.id "; 
 	$res_l = mysqli_query($con, $sql);
 	$lots = mysqli_fetch_all($res_l, MYSQLI_ASSOC);	
+	
+	$is_auth= !empty($_SESSION['is_auth']);
   
 	 
 	//добавляем мои функции
