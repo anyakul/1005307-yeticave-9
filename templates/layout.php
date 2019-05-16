@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -8,26 +9,24 @@
 </head>
 <body>
 <div class="page-wrapper">
-
 <header class="main-header">
     <div class="main-header__container container">
         <h1 class="visually-hidden">YetiCave</h1>
-        <a class="main-header__logo">
+        <a class="main-header__logo" href="index.php">
             <img src="../img/logo.svg" width="160" height="39" alt="Логотип компании YetiCave">
         </a>
         <form class="main-header__search" method="get" action="https://echo.htmlacademy.ru" autocomplete="off">
             <input type="search" name="search" placeholder="Поиск лота">
             <input class="main-header__search-btn" type="submit" name="find" value="Найти">
         </form>
-        <a class="main-header__add-lot button" href="add_lot.php">Добавить лот</a>
-
-        <nav class="user-menu">                         
-		                      
-		                                                     
-        <!-- здесь должен быть PHP код для показа меню и данных пользователя -->
-		
-		<!-- данные пользователя-->
-	    <?php  if (!empty($_SESSION['is_auth'])): ?>
+        <a class="main-header__add-lot button" href=" add_lot.php">Добавить лот</a>
+        <nav class="user-menu"><?php //session_start();  
+		    if ( isset($_SESSION['username'] )): ?>  
+		  <div class="user-menu__logged">
+		     <p><?= $_SESSION['username'] ?></p>
+		     <a class="user-menu__bets" href="my_bets.php">Мои ставки</a>
+		     <a class="user-menu__logout" href="logout.php">Выход</a>
+		   </div><?php else : ?>		    
 			<ul class="user-menu__list">
 		      <li class="user-menu__item">
 		        <a href="sign-up.php">Регистрация</a>
@@ -35,34 +34,19 @@
 		      <li class="user-menu__item">
 		         <a href="login.php">Вход</a>
 		      </li>
-			</ul> 
-		<?php else:?>
-		<div class="user-menu__logged">
-		     <p><?= $user_name ?></p>
-		     <a class="user-menu__bets" href="pages/my-bets.html">Мои ставки</a>
-		     <a class="user-menu__logout" href="logout.php">Выход</a>
-		   </div>
-        <?php endif?>                                 
+			</ul><?php endif;?>	
         </nav>
     </div>
-</header>
-
- 
+</header> 
 <main class="container"> <?=$content ?></main> 
 </div>
 
 <footer class="main-footer">
     <nav class="nav">
-        <ul class="nav__list container">
-		
-            <!--заполняем этот список из массива категорий-->
-			
-			<?php foreach ($categories as $val): ?> 
+        <ul class="nav__list container"><?php foreach ($categories as $val): ?> 
             <li class="nav__item">
             <a href="pages/all-lots.html"><?=htmlspecialchars($val['name'])?></a>
-            </li>
-		    <?php endforeach; ?>
-		      
+            </li><?php endforeach; ?>		      
         </ul>
     </nav>
     <div class="main-footer__bottom container">

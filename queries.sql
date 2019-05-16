@@ -1,4 +1,4 @@
-/*В начале файла напишите запросы типа INSERT для добавления в БД всех необходимых данных.*/
+﻿/*В начале файла напишите запросы типа INSERT для добавления в БД всех необходимых данных.*/
 
 INSERT INTO categories (name, symbol_code) VALUES ('Доски и лыжи', 'boards');
 INSERT INTO categories (name, symbol_code) VALUES ('Крепления', 'attachment');
@@ -7,8 +7,8 @@ INSERT INTO categories (name, symbol_code) VALUES ('Одежда', 'clothing');
 INSERT INTO categories (name, symbol_code) VALUES ('Инструменты', 'tools');
 INSERT INTO categories (name, symbol_code) VALUES ('Разное', 'others');
 
-INSERT INTO users email = 'user1@gmail.com', date_registration = now(), name = 'user1', password = '4terg4', contacts = '+79435345653';
-INSERT INTO users email = 'user2@gmail.com', date_registration = now(), name = 'user2', password = '5tgjl6', contacts = '+73458654334';
+INSERT INTO users set email = 'user1@gmail.com', date_registration = now(), name = 'user1', password = '4terg4', contacts = '+79435345653';
+INSERT INTO users set email = 'user2@gmail.com', date_registration = now(), name = 'user2', password = '5tgjl6', contacts = '+73458654334';
 
 INSERT INTO lots set user_id = 1, category_id = 1, date_create = now(), name = '2014 Rossignol District Snowboard', image = 'img/lot-1', start_price = 10999, step_rate = 1000;
 INSERT INTO lots set user_id = 1, category_id = 1, date_create = now(), name = 'DC Ply Mens 2016/2017 Snowboard', image = 'img/lot-2', start_price = 159999, step_rate = 1000;

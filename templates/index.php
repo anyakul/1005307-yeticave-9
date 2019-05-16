@@ -1,5 +1,5 @@
 <?php
-$is_auth = 0;
+$is_auth = rand(0, 1);
 $user_name = "Аня Куликова"; // укажите здесь ваше имя
 ?>
 <!DOCTYPE html>
