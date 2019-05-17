@@ -55,7 +55,7 @@
    			WHERE  ( MATCH(l.name,description)  AGAINST( '$word_search')) and (l.date_finish > NOW()) LIMIT  $page_items   OFFSET  $offset";  
  	$res_l = mysqli_query($con, $sql);	 
  	$lots = mysqli_fetch_all($res_l, MYSQLI_ASSOC);
-	
+	    
 	$mark_rates = [];
 		$time_to_end = [];
         if(count($lots) != 0) {			
