@@ -46,3 +46,4 @@ CREATE INDEX c_category ON lots(category_id);
 CREATE INDEX c_user ON lots(user_id);
 CREATE UNIQUE INDEX c_user_name ON users(name);
 CREATE UNIQUE INDEX c_email  ON users(email);
+CREATE FULLTEXT INDEX lot_ft_searchlotslots ON lots(name, description)   /* добавлено 16.05.2019 /*

@@ -8,7 +8,8 @@
 			
 				<?php foreach ($categories as  $val): ?>
                <li class="promo__item promo__item--<?=($val['symbol_code'])?>">
-                  <a class="promo__link" href="pages/all-lots.html"><?=htmlspecialchars($val['name'])?></a>
+			      <?php $category_id = "all-lots.php?id=" . $val['id']?>             
+                  <a class="promo__link" href=<?=$category_id?>><?=htmlspecialchars($val['name'])?></a>
                </li>
 			  <?php endforeach; ?>
 			  
@@ -22,25 +23,28 @@
         
             <!--заполняем этот список из массива с товарами-->	
 
-		<?php	foreach ($lots as $val): ?>		 
+		<?php for ($i=0; $i < count($lots); $i++) : ?>	 
             <li class="lots__item lot">
                 <div class="lot__image">
-                    <img src="<?=$val['image']?>" width="350" height="260" alt="">
+                    <img src="<?=$lots[$i]['image']?>" width="350" height="260" alt="">
                 </div>
                 <div class="lot__info">
-                    <span class="lot__category"><?=htmlspecialchars($val['category'])?></span>
-                    <h3 class="lot__title"><a class="text-link" href = "<?=$val['page_adress']?>" ><?=htmlspecialchars($val['name'])?></a></h3>
+                    <span class="lot__category"><?=htmlspecialchars($lots[$i]['category'])?></span>
+                    <h3 class="lot__title"><a class="text-link" href = "<?=$lots[$i]['page_adress']?>" ><?=htmlspecialchars($lots[$i]['name'])?></a></h3>
                     <div class="lot__state">
-                        <div class="lot__rate">
-                            <span class="lot__amount">Текущая цена</span>
-                            <span class="lot__cost"><?=format_price(htmlspecialchars($val['current_price']))?><b class="rub">₽</b>  </span>
+                        <div class="lot__rate"> 
+						    <?php $output_text = ($mark_rates[$i] == 0) ? "стартовая цена" :"аукционная цена";
+				            $output_price = ($mark_rates[$i] == 0) ? $lots[$i]['start_price'] : $lots[$i]['current_price'] ;						 
+				            ?>
+                            <span class="lot__amount"><?=$output_text?></span>
+                            <span class="lot__cost"><?=format_price(htmlspecialchars( $output_price ))?><b class="rub">₽</b>  </span>
                         </div>						 
-                        <div class="lot__timer timer <?php if ($time_to_finish['feature_finish'] === true):?>timer--finishing<?php endif; ?>">
-                          <?=$time_to_finish['finish_time'];?> 
+                        <div class="lot__timer timer <?php if ($time_to_end[$i]['feature_finish'] === true):?>timer--finishing<?php endif; ?>">
+                          <?=$time_to_end[$i]['finish_time'];?> 
 						</div>
                     </div>
                 </div>
             </li>
-			<?php endforeach; ?>
+			 <? endfor; ?> 
         </ul>
     </section>

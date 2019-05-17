@@ -78,17 +78,29 @@
 					   foreach ($required as $key) {
 						   $lot[$key] = addslashes($lot[$key]);
 					   }
-					   $lots['user_id'] = 2;
+					  
+					   foreach ($categories as $category) {
+						   if ($lot['category'] == $category['name']) {
+							   $category_id = $category['id'];
+						   }
+					   }
 					   $lot['category'] =2;			    	  
-                       $sql = "INSERT INTO lots (  date_create, name,  category_id, user_id, start_price, description, step_rate, date_finish, image) 
-					          VALUES  (NOW(),?,?,2,?,?,?,?,?)";
-                       $stmt = db_get_prepare_stmt($con, $sql, [$lot['lot-name'], $lot['category'], $lot['lot-rate'], $lot['message'], $lot['lot-step'],
-                                $lot['lot-date'], $lot['image']]);  				    
+                       $sql = "INSERT INTO lots (  date_create, name,  category_id, user_id, start_price, current_price, description, step_rate, date_finish, image) 
+					          VALUES  (NOW(),?,?,?,?,?,?,?,?,?)";
+					  
+                       $stmt = db_get_prepare_stmt($con, $sql, [$lot['lot-name'], $category_id, $_SESSION['user_id'], $lot['lot-rate'], $lot['lot-rate'],  $lot['message'],
+					                               $lot['lot-step'], $lot['lot-date'], $lot['image']]);  				    
  			           $res  = mysqli_stmt_execute($stmt);		        	 
 					   if($res) {
 						   $lot_id = mysqli_insert_id($con);
 					   }					 
 					   $con = mysqli_connect("localhost", "root", "", "yeticave"); 
+					   
+					   $page_adress = "lot.php?id=" . "$lot_id";
+					//   var_dump( $page_adress);
+					   $sql = "UPDATE lots SET page_adress =  '$page_adress'  WHERE id = $lot_id";
+		               $res_c = mysqli_query($con, $sql);	
+					   
 					   
 			 		   header("location: lot.php?id=" . "$lot_id"  );
 		          					 
