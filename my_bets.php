@@ -24,7 +24,12 @@
 	    // добавляем функции из helper  
 
         require('helpers.php');
-		$user_id = $_SESSION['user_id']; 
+		if ( isset($_GET['user_id'])){
+		    $user_id = $_GET['user_id']; 
+		}
+		else {
+		    $user_id = $_SESSION['user_id'];  
+		}
      // var_dump($user_id);		
         $sql = "SELECT   l.page_adress page_adress, l.image lot_image, l.name lot_name, l.date_finish lot_date_finish, l.category_id category_id, 
 		                r.price, r.date_create 

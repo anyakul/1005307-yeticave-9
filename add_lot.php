@@ -85,8 +85,8 @@
 						   }
 					   }
 					   $lot['category'] =2;			    	  
-                       $sql = "INSERT INTO lots (  date_create, name,  category_id, user_id, start_price, current_price, description, step_rate, date_finish, image) 
-					          VALUES  (NOW(),?,?,?,?,?,?,?,?,?)";
+                       $sql = "INSERT INTO lots (  date_create, name,  category_id, user_id, start_price, current_price, description, step_rate, date_finish, image, user_winner_id) 
+					          VALUES  (NOW(),?,?,?,?,?,?,?,?,?,0)";
 					  
                        $stmt = db_get_prepare_stmt($con, $sql, [$lot['lot-name'], $category_id, $_SESSION['user_id'], $lot['lot-rate'], $lot['lot-rate'],  $lot['message'],
 					                               $lot['lot-step'], $lot['lot-date'], $lot['image']]);  				    

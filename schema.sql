@@ -13,13 +13,14 @@ symbol_code char(128)
 CREATE TABLE lots (
 id INT AUTO_INCREMENT PRIMARY KEY,
 user_id INT UNSIGNED,
-user_winner_id INT UNSIGNED,
+user_winner_id INT,
 category_id INT UNSIGNED,
 date_create DATETIME,
 name char(128),
 description text,
 image char(128) ,
 start_price int UNSIGNED,
+current_price int UNSIGNED,
 date_finish DATETIME,
 step_rate INT UNSIGNED
 );
