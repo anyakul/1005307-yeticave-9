@@ -25,11 +25,11 @@
 		$categories = mysqli_fetch_all($res_c, MYSQLI_ASSOC); 
 		
        //Написать код валидации формы и показа ошибок.
-			
+		$errors = [];	
 	    
 		if($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$form = $_POST; 		 
-			$errors = [];
+			
 			//  валидация всех текстовых полей формы
 			 
 			// Проверка email

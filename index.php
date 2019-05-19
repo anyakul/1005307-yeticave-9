@@ -20,13 +20,21 @@
 	else {
 //		print("Соединение установлено");
 	}
-	mysqli_set_charset($con, "utf8");				
+	mysqli_set_charset($con, "utf8");
+	
+	// подключаем сценарий определения победителя по лотам с истекшими датами и отправки сообщения на почту победителю
+	
+	include('getwinner.php');
+	
+	
+	
+					
     $sql = "SELECT * FROM categories";
 	$res_c = mysqli_query($con, $sql);
 	$categories = mysqli_fetch_all($res_c, MYSQLI_ASSOC);	
 				
 	$sql = "SELECT c.name category, l.image, l.name, l.page_adress, l.start_price, l.date_finish, l.current_price  FROM lots l JOIN categories c ON l.category_id = c.id
-            WHERE l.date_finish > NOW()	"; 
+            WHERE l.date_finish > NOW()	ORDER BY l.date_create "; 
 	$res_l = mysqli_query($con, $sql);
 	$lots = mysqli_fetch_all($res_l, MYSQLI_ASSOC);
  //  var_dump($lots);	

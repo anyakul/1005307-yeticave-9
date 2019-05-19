@@ -38,9 +38,9 @@
         <li class="pagination-item pagination-item-prev"><a <? $page = $cur_page -1; $goto_to_page = "search.php?page=" . "$page";
    		if($cur_page>1) :?> href=<?=$goto_to_page?>"<?endif;?>>Назад</a></li>
 		<?php foreach ($pages as $page):
-            $goto = "search.php?page=" . "$page";			 
+            $goto_to_page = "search.php?page=" . "$page";			 
 		 ?>
-        <li class="pagination-item <? if($page == $cur_page): ?>pagination-item-active<? endif;?>"><a href=<?=$goto?>><?=$page?></a></li>
+        <li class="pagination-item <? if($page == $cur_page): ?>pagination-item-active<? endif;?>"><a href=<?=$goto_to_page?>><?=$page?></a></li>
         <?php endforeach;?> 
         <li class="pagination-item pagination-item-next"><a <? $page = $cur_page +1; $goto_to_page = "search.php?page=" . "$page"; if($cur_page < $pages_count) :?>
 		 href=<?=$goto_to_page?>"<?endif;?>>Вперед</a></li>

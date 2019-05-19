@@ -1,5 +1,4 @@
 <?php session_start();
-
     // устанавливаем соединение с базой данных и Создаем  массив категорий 
     $con = mysqli_connect("localhost", "root", "", "yeticave");
 				//if ($con == false) {
@@ -27,12 +26,13 @@
 		
     if (isset($_GET['search'])) {
 		 $_SESSION['search'] = $_GET['search']; 
-	     $word_search = addslashes($_SESSION['search']);         
-    //    var_dump($word_search);		
-	   //     var_dump($id);	 
-		// выбираем из базы  данных данные для лота с требуемым id 
+	     $word_search = addslashes(trim($_SESSION['search']));         
+        
+	   
+		// подсчитываем количество записей в таблице lots   базы  данных, удовлетворяющих условию поиска 
+		
 		 $result = mysqli_query($con,"SELECT COUNT(*) as cnt FROM lots l JOIN categories c ON l.category_id = c.id  
-	  			WHERE  ( MATCH(l.name,description)  AGAINST('$word_search')) and (l.date_finish > NOW())");
+	  			WHERE   (MATCH(l.name, l.description)  AGAINST( '$word_search' ))  and  (l.date_finish > NOW()) ");
 	     $items_count = mysqli_fetch_assoc($result)['cnt'];		 
 	     $pages_count = ceil($items_count/$page_items); 
          $_SESSION['pages_count'] = $pages_count;  
@@ -40,7 +40,9 @@
 	else {	
 	    $word_search = addslashes($_SESSION['search']);	
 	    $pages_count = $_SESSION['pages_count'];
+		
 	}		// вводим метки наличия аукционной цены  и записываем время до завершения торгов в массивы
+	
 	$pages = range(1, $pages_count);	 
 		
   	if(   isset($_GET['page'])) {		    
@@ -49,15 +51,19 @@
     else {
 		 $cur_page =1;
 	}
+	$lots = 0;
     $offset = ($cur_page - 1) * $page_items;
-     $sql = "SELECT c.name category, l.id, l.image, l.description, l.date_create, l.current_price, l.date_finish,
+	
+	// выбираем  из таблицы lots  записи, удовлетворяющих условию поиска 
+	
+    $sql = "SELECT c.name category, l.id, l.image, l.description, l.date_create, l.current_price, l.date_finish,
  	        l.name, l.page_adress, l.start_price, l.step_rate, l.user_id FROM lots l JOIN categories c ON l.category_id = c.id  
    			WHERE  ( MATCH(l.name,description)  AGAINST( '$word_search')) and (l.date_finish > NOW()) LIMIT  $page_items   OFFSET  $offset";  
  	$res_l = mysqli_query($con, $sql);	 
  	$lots = mysqli_fetch_all($res_l, MYSQLI_ASSOC);
-	    
+	
 	$mark_rates = [];
-		$time_to_end = [];
+	$time_to_end = [];
         if(count($lots) != 0) {			
 			for( $i=0; $i < count($lots); $i++) {
 				if ($lots[$i]['current_price'] == $lots[$i]['start_price']) { 
