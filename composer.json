@@ -1,0 +1,6 @@
+{
+    "name": "akuli/localhost",
+    "require": {
+        "swiftmailer/swiftmailer": "^6.0"
+    }
+}

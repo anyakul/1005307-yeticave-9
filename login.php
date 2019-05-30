@@ -1,39 +1,30 @@
 <?php 
-       session_start();
-        // устанавливаем соединение с базой данных и Создаем  массив категорий 
-
-        $con = mysqli_connect("localhost", "root", "", "yeticave");
-     	if ($con == false) {
-// 			print("Ошибка подключения: " . mysqli_connect_error());
-	 	}
-		else {
-//			print("Соединение установлено");
-		}				
-	    mysqli_set_charset($con, "utf8");
-				
-		//  Добавляем мои функции
-	
-        require('my_function.php'); 
- 	 
-	    // добавляем функции из helper  
-
+        session_start();
+	    if( isset($_SESSION['username'] )) {	
+	    $user_name =  $_SESSION['username'];
+        } 
+		
+        // добавляем функции из helper  
         require('helpers.php');
+	
+	    //  Добавляем мои функции	
+        require('my_function.php'); 	
+	
+	    // устанавливаем соединение с базой данных и Создаем  массив категорий 
+        $con = mysqli_connect("localhost", "root", "", "yeticave");
+	    mysqli_set_charset($con, "utf8");
+	
+	    // получаем из базы данных массив категорий	
+	    $categories = get_categories($con); 
 		
-		// получаем из базы данных массив категорий
-		$sql = "SELECT * FROM categories";
-		$res_c = mysqli_query($con, $sql);
-		$categories = mysqli_fetch_all($res_c, MYSQLI_ASSOC); 
-		
-       //Написать код валидации формы и показа ошибок.
+       //блок валидации формы
 		$errors = [];	
 	    
 		if($_SERVER['REQUEST_METHOD'] == 'POST') {
-			$form = $_POST; 		 
+			$form = $_POST; 
 			
-			//  валидация всех текстовых полей формы
 			 
-			// Проверка email
-			
+			// Проверка email			
 			if ( empty($_POST['email']) or !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
 				$errors['email'] = 'Поле не заполнено или неверный Email';	
 			}		
@@ -46,17 +37,18 @@
 					$errors['email'] = 'пользователя с таким email не существует';		 
 			    } 			
 				else {			 
-					if( password_verify( $form['password'], $user[0]['password'])) { 			 
-				    //unset($_SESSION['username']);
+					if( password_verify( $form['password'], $user[0]['password'])) { 				 
 			 		 $_SESSION ['username'] = $user[0]['name'];
-                     $_SESSION ['user_id'] = $user[0]['id'];					 
-						 header("Location: index.php");
+                     $_SESSION ['user_id'] = $user[0]['id'];                     
+					 
+					 header("Location: index.php");
 					} 
 					else {
 					   $errors['password'] = 'Неверный пароль';			 
                     }
 				}
 			}
+			
 		}
 			
 	    $page_content = include_template('login.php',  ['form' => $form, 'errors' => $errors]);	 

@@ -1,29 +1,24 @@
- <section class="promo">
+    <section class="promo">
         <h2 class="promo__title">Нужен стафф для катки?</h2>
         <p class="promo__text">На нашем интернет-аукционе ты найдёшь самое эксклюзивное сноубордическое и горнолыжное снаряжение.</p>
-        <ul class="promo__list">
-			
-			
-            <!--заполняем этот список из массива категорий-->
-			
-				<?php foreach ($categories as  $val): ?>
-               <li class="promo__item promo__item--<?=($val['symbol_code'])?>">
-			      <?php $category_id = "all-lots.php?id=" . $val['id']?>             
-                  <a class="promo__link" href=<?=$category_id?>><?=htmlspecialchars($val['name'])?></a>
-               </li>
-			  <?php endforeach; ?>
-			  
+        <ul class="promo__list">			
+        <!--заполняем этот список из массива категорий-->			
+		<?php foreach ($categories as  $val): ?>
+            <li class="promo__item promo__item--<?=($val['symbol_code'])?>">
+		    <?php $category_id = "all-lots.php?id=" . $val['id']?>             
+                <a class="promo__link" href=<?=$category_id?>><?=htmlspecialchars($val['name'])?></a>
+            </li>
+		<?php endforeach; ?>			  
         </ul>
     </section>
     <section class="lots">
         <div class="lots__header">
             <h2>Открытые лоты</h2>
         </div>
-		<ul class="lots__list">	
-        
-            <!--заполняем этот список из массива с товарами-->	
-
-		<?php for ($i=0; $i < count($lots); $i++) : ?>	 
+		<ul class="lots__list">        
+            <!--заполняем этот список из массива с товарами-->
+		<?php 
+		for ($i=0; $i < count($lots); $i++) : ?>	 
             <li class="lots__item lot">
                 <div class="lot__image">
                     <img src="<?=$lots[$i]['image']?>" width="350" height="260" alt="">
@@ -33,18 +28,20 @@
                     <h3 class="lot__title"><a class="text-link" href = "<?=$lots[$i]['page_adress']?>" ><?=htmlspecialchars($lots[$i]['name'])?></a></h3>
                     <div class="lot__state">
                         <div class="lot__rate"> 
-						    <?php $output_text = ($mark_rates[$i] == 0) ? "стартовая цена" :"аукционная цена";
-				            $output_price = ($mark_rates[$i] == 0) ? $lots[$i]['start_price'] : $lots[$i]['current_price'] ;						 
+						    <?php 							
+							$output_text = ($lots[$i]['user_winner_id'] == 0) ? "стартовая цена"
+                							: (string)$lots[$i]['count_rates'] . ' ' . get_noun_plural_form( $lots[$i]['count_rates'], 'ставка', 'ставки', 'ставок');
+				            $output_price = ($lots[$i]['user_winner_id'] == 0) ? $lots[$i]['start_price'] : $lots[$i]['current_price'];						 
 				            ?>
                             <span class="lot__amount"><?=$output_text?></span>
                             <span class="lot__cost"><?=format_price(htmlspecialchars( $output_price ))?><b class="rub">₽</b>  </span>
                         </div>						 
                         <div class="lot__timer timer <?php if ($time_to_end[$i]['feature_finish'] === true):?>timer--finishing<?php endif; ?>">
-                          <?=$time_to_end[$i]['finish_time'];?> 
+                           <?=$time_to_end[$i]['finish_time'];?> 
 						</div>
                     </div>
                 </div>
             </li>
-			 <? endfor; ?> 
+	    <? endfor; ?> 
         </ul>
     </section>

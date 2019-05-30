@@ -1,7 +1,7 @@
      <div class="container">
       <section class="lots">
-	    <?php $h2_output_text = (count($lots) >0) ? "Результаты поиска по запросу:   " :"Нет лотов удовлетворяющих запросу:  ";
-	          $output_price = ($mark_rates[$i] == 0) ? $lots[$i]['start_price'] : $lots[$i]['current_price'] ;						 
+	    <?php
+		$h2_output_text = (count($lots) >0) ? "Результаты поиска по запросу:   " :"Нет лотов удовлетворяющих запросу:  ";	          				 
 	    ?>
         <h2><?=$h2_output_text?>«<span><?=$h2_text?></span>»</h2>
         <ul class="lots__list">
@@ -16,8 +16,8 @@
               <h3 class="lot__title"><a class="text-link" href=<?=$go_to_lot ?>><?=$lots[$i]['name']?></a></h3>
               <div class="lot__state">
                 <div class="lot__rate">
-                  <?php $output_text = ($mark_rates[$i] == 0) ? "стартовая цена" :"аукционная цена";
-				        $output_price = ($mark_rates[$i] == 0) ? $lots[$i]['start_price'] : $lots[$i]['current_price'] ;						 
+                  <?php $output_text = ($lots[$i]['user_winner_id'] == 0) ? "стартовая цена" :"аукционная цена";
+				        $output_price = ($lots[$i]['user_winner_id'] == 0) ? $lots[$i]['start_price'] : $lots[$i]['current_price'] ;						 
 				  ?>
                   <span class="lot__amount"><?=$output_text?></span>
                   <span class="lot__cost"><?=$output_price?><b class="rub">р</b></span>
@@ -29,21 +29,25 @@
               </div>
             </div>
           </li>
-		  <? endfor; ?>  
+		<? endfor; ?>  
         </ul>
       </section>
 	  
       <?php if ($pages_count > 1) :?>
       <ul class="pagination-list">	   
         <li class="pagination-item pagination-item-prev"><a <? $page = $cur_page -1; $goto_to_page = "search.php?page=" . "$page";
-   		if($cur_page>1) :?> href=<?=$goto_to_page?>"<?endif;?>>Назад</a></li>
-		<?php foreach ($pages as $page):
-            $goto_to_page = "search.php?page=" . "$page";			 
+   		    if($cur_page>1) :?> href=<?=$goto_to_page?>"<?endif;?>>Назад</a>
+		</li>
+		<?php foreach ($pages as $page): $goto_to_page = "search.php?page=" . "$page";			 
 		 ?>
-        <li class="pagination-item <? if($page == $cur_page): ?>pagination-item-active<? endif;?>"><a href=<?=$goto_to_page?>><?=$page?></a></li>
+        <li class="pagination-item <? if($page == $cur_page): ?>pagination-item-active<? endif;?>">
+		    <a href=<?=$goto_to_page?>><?=$page?></a>
+		</li>
         <?php endforeach;?> 
-        <li class="pagination-item pagination-item-next"><a <? $page = $cur_page +1; $goto_to_page = "search.php?page=" . "$page"; if($cur_page < $pages_count) :?>
-		 href=<?=$goto_to_page?>"<?endif;?>>Вперед</a></li>
+        <li class="pagination-item pagination-item-next">
+		    <a <? $page = $cur_page +1; $goto_to_page = "search.php?page=" . "$page"; if($cur_page < $pages_count) :?>
+		    href=<?=$goto_to_page?>"<?endif;?>>Вперед</a>
+		 </li>
       </ul>
 	  <?php endif; ?>
     </div>

@@ -21,6 +21,7 @@ description text,
 image char(128) ,
 start_price int UNSIGNED,
 current_price int UNSIGNED,
+count_rates int UNSIGNED,
 date_finish DATETIME,
 step_rate INT UNSIGNED
 );

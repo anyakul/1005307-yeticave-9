@@ -1,47 +1,34 @@
-<?php 
- 
-        // устанавливаем соединение с базой данных и Создаем  массив категорий 
-        $con = mysqli_connect("localhost", "root", "", "yeticave");
-     	if ($con == false) {
-// 			print("Ошибка подключения: " . mysqli_connect_error());
-	 	}
-		else {
-//			print("Соединение установлено");
-		}				
-	    mysqli_set_charset($con, "utf8");
-				
-		//  Добавляем мои функции
-	
+<?php  
+         session_start();
+		if( isset($_SESSION['username'] )) {	
+	       $user_name =  $_SESSION['username'];
+        }       	
+            
+		//  Добавляем мои функции	
         require('my_function.php'); 
  	 
-	    // добавляем функции из helper  
+	    // добавляем функции из helper		
         require('helpers.php');
 		
-		// получаем из базы данных массив категорий
-		$sql = "SELECT * FROM categories";
-		$res_c = mysqli_query($con, $sql);
-		$categories = mysqli_fetch_all($res_c, MYSQLI_ASSOC);   
+		// устанавливаем соединение с базой данных  
+        $con = mysqli_connect("localhost", "root", "", "yeticave");  
+	    mysqli_set_charset($con, "utf8");	
+		
+		// получаем из базы данных массив категорий	
+	    $categories = get_categories($con);  
 		   
-       //Написать код валидации формы и показа ошибок.
+       // блок валидации формы
 	    $required = ['email', 'password', 'name', 'message']; 
-     $errors = []; 
-		if($_SERVER['REQUEST_METHOD'] == 'POST') {
-		//	foreach ($required as $key){
-		//		if (!empty($_POST[$key])) {
-		//			$user[$key] = $_POST[$key];
-		//		}
-		//	}   
-			
-			$user = $_POST; 
-			// поля, обязательные для заполнения
-			
-			//  валидация всех текстовых полей формы
+        $errors = []; 
+		if($_SERVER['REQUEST_METHOD'] == 'POST') {				
+			$user = $_POST; 			 
 			$error = 'это поле обязательно для заполнения';
 			foreach ($required as $key) {
 				if (empty($_POST[$key])) {
 					$errors[$key] = $error; 
 				} 
 			}
+			
 			if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
 				$errors['email'] = 'Email должен быть корректным';
 			}		
@@ -69,7 +56,8 @@
 				}
 		    
 				// должны остаться на той же странице с изменнненными классами и сохраненными данными
-  		}	 
+  		}
+		
  	    $page_content = include_template('sign-up.php', [ 'categories' => $categories, 'user' =>$user, 'errors' => $errors]);		         
  	    $layout_content = include_template('layout.php',
               ['content' => $page_content, 'categories'=> $categories, 'title' => 'YetiCave - Регистрация', 'user_name' => $user_name, 'is_auth' => $is_auth ]);

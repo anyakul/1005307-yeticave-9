@@ -5,51 +5,35 @@
 	    <?php 	   
 	    foreach($my_bets as $val) :
 		  $time_to_finish = time_to_finish($val['lot_date_finish']);		 
-	 	  $classname_is = ($time_to_finish['is_time_to_finish']) ? "" : "rates__item--end";
-		  $time_output =  ($time_to_finish['is_time_to_finish']) ? $time_to_finish['finish_time'] : "торги завершены";          
-          $classname = ($time_to_finish['feature_finish'])? "timer--finishing" : "";       
+	 	  $classname_end = ($time_to_finish['is_time_to_finish'] ) ? "" : "rates__item--end";  // определяем класс для ставок завершившегося лота
+		  $time_output =  ($time_to_finish['is_time_to_finish']) ? $time_to_finish['finish_time'] : "торги окончены";  // меняем значение поля времени для завершившихся лотов         
+          $classname_finishing = ($time_to_finish['feature_finish'])? "timer--finishing" : ""; // определяем класс для лотов с сроком жизни меньше 1 часа
+          if ($val['mark_win']) : $classname_end = "rates__item--win";    endif;                    //  меняем класс  "rates__item--end" на класс "rates__item--win" для выигравшей ставки
+		  $classname_win_td = ($val['mark_win'])	? "timer--win" : "";                               //  определяем класс "timer--win" для поля с временем  для строки выигравшей ставки
+		  if ($val['mark_win']) : $time_output = "Ставка выиграла"; endif;                          //  меняем поле времени на "Ставка выиграла" для выигравшей ставки
 		?>
-        <tr class="rates__item <?=$classname?> <?=$classname_is?> ">
+        <tr class="rates__item  <?=$classname_end?>  ">
           <td class="rates__info">
             <div class="rates__img">
               <img src="<?=$val['lot_image']?>" width="54" height="40" alt="Сноуборд">
             </div>
-            <h3 class="rates__title"><a href="<?=$val['page_adress']?>"><?=$val['lot_name']?></a></h3>
+			<div>
+               <h3 class="rates__title"><a href="<?=$val['page_adress']?>"><?=$val['lot_name']?></a></h3>
+			   <? if ($val['mark_win']) :?><p><?=$val['user_contacts']?> </p><?endif?>
+			</div>
           </td>
           <td class="rates__category">
-            <?=$val['category_id']?>
+            <?=$val['category']?>
           </td>
 		
           <td class="rates__timer">
-            <div class="timer "> <?=$time_output?></div>
+            <div class="timer <?=$classname_finishing?> <?=$classname_win_td?>"> <?=$time_output?></div>
           </td>
           <td class="rates__price">
             <?=$val['price']?>
-          </td>
-          <?php $date_create = $val['date_create'];
-		    $time_to_second = time() - strtotime($date_create);
-		//	var_dump($time_to_second);
-		    $day = floor($time_to_second / 3600/24);
-		//	var_dump($day);			
-			if($day > 1) { $date_string =(string)$day .' ' .   get_noun_plural_form ($day, 'день назад', 'дня назад', 'дней назад');
-			}
-			else {
-				$hours = floor($time_to_second /3600);
-		//	    var_dump($hours);
-				if($hours >=1){$date_string = (string)$hours .' ' . get_noun_plural_form ($hours, 'час назад', 'часа назад', 'часов назад');
-				} 		                  
-				else {$minutes = floor($time_to_second /60);
-		//	        var_dump($minutes); 
-					
-					if($minutes >=1){$date_string =(string)$minutes .' ' .   get_noun_plural_form ($minutes, 'минута назад', 'минуты назад',
-  						  'минут назад');
-				    }
-					else {$date_string = 'только что'; var_dump($date_string);}
-				}
-			}	
-           ?>			
+          </td>          
           <td class="rates__time">		   
-           <?=$date_string?>
+           <?=get_date_string( $val['date_create'])?>
           </td>
         </tr>
 		<?php endforeach?>   
