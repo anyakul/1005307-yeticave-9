@@ -1,23 +1,12 @@
 <?php 
         session_start();
-		if( isset($_SESSION['username'] )) {	
-	       $user_name =  $_SESSION['username'];
-        }  
-        // устанавливаем соединение с базой данных  
-        $con = mysqli_connect("localhost", "root", "", "yeticave");   
-	    mysqli_set_charset($con, "utf8");		
-            
-		//  Добавляем мои функции	
-        require('my_function.php'); 
- 	 
-	    // добавляем функции из helper		
-        require('helpers.php');
-		
-		// получаем из базы данных массив категорий	
-	    $categories = get_categories($con);
+		 
+        /* общий   блок начальных дейтсвий, включая подключение общих функций, подключение базы данных,
+    	 получение массива категорий, блока вывода ошибок на экран */		 
+     	include('common_block.php');  
 		
 		if ( isset($_GET['user_id'])){
-		    $user_id = $_GET['user_id']; 
+		    $user_id = addslashes($_GET['user_id']); 
 		}
 		else {
 		    $user_id = $_SESSION['user_id'];  
@@ -33,13 +22,14 @@
 		for( $i=0; $i < count($my_bets); $i++) {
 			$category_id = $my_bets[$i]['category'];
 			foreach( $categories as $category) {
-				if($category['id'] == $category_id  ) {				 
+				if($category['id'] === $category_id  ) {				 
 					$my_bets[$i]['category'] = $category['name'];									 
 				}						 
 			}
+			
 			$my_bets[$i]['mark_win'] = false;
 			$my_bets[$i]['user_contacts'] = '';
-			if ($_SESSION['user_id'] == -$my_bets[$i]['user_winner_id'] and $my_bets[$i]['current_price'] == $my_bets[$i]['price']) {
+			if ($_SESSION['user_id'] === -$my_bets[$i]['user_winner_id'] and $my_bets[$i]['current_price'] === $my_bets[$i]['price']) {
 				$my_bets[$i]['mark_win'] = true;
 				$user_id = $my_bets[$i]['user_id'];
 				$res = mysqli_query($con, "SELECT * FROM users WHERE id = $user_id");

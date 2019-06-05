@@ -12,8 +12,9 @@
         </ul>
     </section>
     <section class="lots">
+	     <?php $value_input = (count($lots) > 0)? "открытые лоты" : "открытых лотов нет"; ?>
         <div class="lots__header">
-            <h2>Открытые лоты</h2>
+            <h2><?=$value_input?></h2>
         </div>
 		<ul class="lots__list">        
             <!--заполняем этот список из массива с товарами-->
@@ -29,9 +30,9 @@
                     <div class="lot__state">
                         <div class="lot__rate"> 
 						    <?php 							
-							$output_text = ($lots[$i]['user_winner_id'] == 0) ? "стартовая цена"
-                							: (string)$lots[$i]['count_rates'] . ' ' . get_noun_plural_form( $lots[$i]['count_rates'], 'ставка', 'ставки', 'ставок');
-				            $output_price = ($lots[$i]['user_winner_id'] == 0) ? $lots[$i]['start_price'] : $lots[$i]['current_price'];						 
+							$output_text = ($lots[$i]['user_winner_id'] != 0) ? (string)$lots[$i]['count_rates'] . ' ' . get_noun_plural_form( $lots[$i]['count_rates'], 
+							                'ставка', 'ставки', 'ставок') : "стартовая цена";
+				            $output_price = ($lots[$i]['user_winner_id'] === 0) ? $lots[$i]['start_price'] : $lots[$i]['current_price'];						 
 				            ?>
                             <span class="lot__amount"><?=$output_text?></span>
                             <span class="lot__cost"><?=format_price(htmlspecialchars( $output_price ))?><b class="rub">₽</b>  </span>

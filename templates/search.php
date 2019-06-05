@@ -16,7 +16,7 @@
               <h3 class="lot__title"><a class="text-link" href=<?=$go_to_lot ?>><?=$lots[$i]['name']?></a></h3>
               <div class="lot__state">
                 <div class="lot__rate">
-                  <?php $output_text = ($lots[$i]['user_winner_id'] == 0) ? "стартовая цена" :"аукционная цена";
+                  <?php $output_text = ($lots[$i]['user_winner_id'] !=0) ? "аукционная цена" :"стартовая цена";
 				        $output_price = ($lots[$i]['user_winner_id'] == 0) ? $lots[$i]['start_price'] : $lots[$i]['current_price'] ;						 
 				  ?>
                   <span class="lot__amount"><?=$output_text?></span>
@@ -40,7 +40,7 @@
 		</li>
 		<?php foreach ($pages as $page): $goto_to_page = "search.php?page=" . "$page";			 
 		 ?>
-        <li class="pagination-item <? if($page == $cur_page): ?>pagination-item-active<? endif;?>">
+        <li class="pagination-item <? if($page === $cur_page): ?>pagination-item-active<? endif;?>">
 		    <a href=<?=$goto_to_page?>><?=$page?></a>
 		</li>
         <?php endforeach;?> 

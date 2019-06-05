@@ -272,9 +272,10 @@ main.container {
   float: left;
 }
 
-.user-menu__logged a:last-child {
-  margin-left: 20px;
+.user-menu__logged a:last-child   {  
+  margin-left:  20px;
 }
+
 
 .user-menu__logged a:hover {
   text-decoration: underline;

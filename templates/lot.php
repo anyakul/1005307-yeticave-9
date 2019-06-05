@@ -12,7 +12,7 @@
           <div class="lot-item__state"> 
             <?php 
 			   $classname = ($time_to_finish['feature_finish'])  ? "timer--finishing" : "";
-			   $type_price = (count($lot_rates) > 0) ? "текущая цена" : "стартовая цена"	;			   	 	            
+			   $type_of_price = (count($lot_rates) > 0) ? "текущая цена" : "стартовая цена"	;			   	 	            
 		       $time_output =  ($time_to_finish['is_time_to_finish']) ? $time_to_finish['finish_time'] : "Аукцион завершен"; 
 			?>		  
             <div class="lot-item__timer timer <?=$classname;?>"> 
@@ -20,7 +20,7 @@
             </div>
             <div class="lot-item__cost-state">
               <div class="lot-item__rate">
-                <span class="lot-item__amount"><?=$type_price?></span>
+                <span class="lot-item__amount"><?=$type_of_price?></span>
                 <span class="lot-item__cost"><?=$current_price?><?=$add_ruble?></span>
               </div>
               <div class="lot-item__min-cost">
@@ -36,7 +36,7 @@
 		        <form class="lot-item__form <?= $classname ?>" action="lot.php" method="post" autocomplete="off">
                   <p class="lot-item__form-item form__item >
                     <label for="cost">Ваша ставка</label>
-                    <input id="cost" type="text" name="cost" placeholder="<?=$value_input?>">
+                    <input id="cost" type="text" name="cost" placeholder="введите ставку">
                     <span class="form__error"><?=$value_error?></span>
                   </p>
                   <button type="submit" class="button">Сделать ставку</button>
@@ -48,9 +48,9 @@
              <table class="history__list">	     
   			  <?php  foreach ($lot_rates as $val): ?>
 			  <tr class="history__item">
-                <td class="history__price"><?=htmlspecialchars($val['user_name'])?></td>               
-				<td class="history__name"><?=htmlspecialchars( $val['price'])?></td>
-                <td class="history__time"><?=htmlspecialchars($val['date_create'])?></td>              		   
+                <td class="history__price"><?= $val['user_name']?></td>               
+				<td class="history__name"><?= $val['price']?></td>
+                <td class="history__time"> <?=get_date_string( $val['date_create'])?></td>              		   
 			 </tr>
 			 <?php endforeach; ?>	 
              </table>

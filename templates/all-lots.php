@@ -22,11 +22,11 @@
               <div class="lot__state">
                 <div class="lot__rate">
                   <?php 
-				  $output_text = ($lots[$i]['user_winner_id'] == 0) ? "стартовая цена" :"аукционная цена";
-				  $output_price = ($lots[$i]['user_winner_id'] == 0) ? $lots[$i]['start_price'] : $lots[$i]['current_price'] ;						 
+				  $output_text = ($lots[$i]['user_winner_id'] != 0) ? "аукционная цена" :"стартовая цена";
+				  $output_price = ($lots[$i]['user_winner_id'] === 0) ? $lots[$i]['start_price'] : $lots[$i]['current_price'] ;						 
 				  ?>
                   <span class="lot__amount"><?=$output_text?></span>
-                  <span class="lot__cost"><?=$output_price?><b class="rub">р</b></span>
+                  <span class="lot__cost"><?=htmlspecialchars($output_price)?><b class="rub">р</b></span>
                 </div>
 				<?php 
 				$classname = ( $time_to_end[$i]['feature_finish']) ? "timer--finishing" : "";
@@ -47,7 +47,7 @@
 		</li>
 		<?php foreach ($pages as $page):
 		$goto_to_page = "all-lots.php?page=" . "$page";	?>
-        <li class="pagination-item <? if($page == $cur_page): ?>pagination-item-active<? endif;?>">
+        <li class="pagination-item <? if($page === $cur_page): ?>pagination-item-active<? endif;?>">
 		    <a href=<?=$goto_to_page?>><?=$page?></a>
 		</li>
         <?php endforeach;?> 

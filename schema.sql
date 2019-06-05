@@ -1,9 +1,5 @@
- 
-
-CREATE DATABASE yeticave;
-DEFAULT CHARACTER SET UTF8;
-DEFAULT COLLATE UTF8_GENERAL_CI; 
-  
+CREATE DATABASE yeticave DEFAULT CHARACTER SET UTF8 DEFAULT COLLATE UTF8_GENERAL_CI; 
+USE yeticave; 
 CREATE TABLE categories (
 id INT AUTO_INCREMENT PRIMARY KEY,
 name char(128),
@@ -23,7 +19,8 @@ start_price int UNSIGNED,
 current_price int UNSIGNED,
 count_rates int UNSIGNED,
 date_finish DATETIME,
-step_rate INT UNSIGNED
+step_rate INT UNSIGNED,
+page_adress char(128)
 );
 
 CREATE TABLE rates (
@@ -44,8 +41,8 @@ avatar char(128) ,
 contacts char(255)
 );
 
-CREATE INDEX c_category ON lots(category_id);
-CREATE INDEX c_user ON lots(user_id);
-CREATE UNIQUE INDEX c_user_name ON users(name);
-CREATE UNIQUE INDEX c_email  ON users(email);
-CREATE FULLTEXT INDEX lot_ft_searchlotslots ON lots(name, description)   /* добавлено 16.05.2019 /*
+CREATE INDEX l_category ON lots(category_id);
+CREATE INDEX l_user_id ON lots(user_id);
+CREATE UNIQUE INDEX u_user_name ON users(name);
+CREATE UNIQUE INDEX u_email  ON users(email);
+CREATE FULLTEXT INDEX lot_ft_searchlotslots ON lots(name, description)    
