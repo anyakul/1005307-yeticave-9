@@ -5,6 +5,7 @@
     <title><?=$title?></title>
     <link href="../css/normalize.min.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
+	<link href="../css/flatpickr.min.css" rel="stylesheet">
 </head>
 <body>
 <div class="page-wrapper">
@@ -20,13 +21,13 @@
         </form>
         <a class="main-header__add-lot button" href=" add_lot.php">Добавить лот</a>
         <nav class="user-menu">
-		<?php if ( isset($_SESSION['username'] )):?>  
+		<?php if (isset($_SESSION['username'])):?>  
 		        <div class="user-menu__logged">
-		           <p style = "padding: auto"><?=$user_name?></p>
+		           <p style = "padding: auto"><?=htmlspecialchars($user_name)?></p>
 		           <a class="user-menu__bets" href="my_bets.php">Мои ставки</a>	                    	 		   
 		           <a class="user-menu__logout" href="logout.php">Выход</a>				   
-		        </div><?php 
-		      else : ?>		    
+		        </div><?php
+              else : ?>		    
 			    <ul class="user-menu__list">
 		           <li class="user-menu__item">
 		              <a href="sign-up.php">Регистрация</a>
@@ -39,16 +40,21 @@
         </nav>
     </div>
 </header> 
-<main class="container"> <?=$content ?></main> 
+<?php $classname = ($title === "YetiCave - Главная") ? "container" : ""; ?>
+<main  class=<?=$classname ?>> <?=$content ?></main> 
 </div>
 
 <footer class="main-footer">
     <nav class="nav">
         <ul class="nav__list container">
-		<?php foreach ($categories as $val): ?> 
-            <li class="nav__item">
+		<?php foreach ($categories as $val):
+            if ($title !== 'YetiCave - Результаты поиска по категории') {
+                $h2_text = "";
+            }
+            $classname =($h2_text === $val['name'] and $title === 'YetiCave - Результаты поиска по категории') ? "nav__item--current" : ""; ?>	
+            <li class="nav__item <?=$classname ?>">
 			<?php $goto_category_id = "all-lots.php?id=" . $val['id']?>
-            <a href=<?=$goto_category_id?>><?=htmlspecialchars($val['name'])?></a>
+            <a href=<?=$goto_category_id?>><?= $val['name']?></a>
             </li>
 		<?php endforeach; ?>		      
         </ul>
